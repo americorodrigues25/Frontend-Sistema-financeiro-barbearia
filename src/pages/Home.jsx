@@ -276,7 +276,10 @@ export default function Home() {
           <BarChart data={dadosSemana} barSize={60}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="dia" style={{ fill: "#1f2937" }} />
-            <YAxis style={{ fill: "#1f2937" }} />
+            <YAxis
+              style={{ fill: "#1f2937" }}
+              tickFormatter={(value) => Math.round(value)} // arredonda os números
+            />
             <Tooltip />
             <Bar dataKey="quantidade" fill="#f59e0b" />
           </BarChart>
