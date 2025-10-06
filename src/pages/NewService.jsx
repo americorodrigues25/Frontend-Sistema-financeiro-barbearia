@@ -52,13 +52,13 @@ const NewService = () => {
   return (
     <div className="h-full flex flex-col items-center justify-start bg-gray-100 min-h-screen p-6">
       {/* Header do sistema */}
-      <header className="w-full max-w-4xl bg-gray-900 text-white p-4 rounded-t shadow-md mb-6 flex items-center justify-between">
+      <header className="w-full max-w-5xl bg-gray-900 text-white p-4 rounded-t shadow-md mb-6 flex items-center justify-between">
         <h1 className="text-lg font-bold">Serviços</h1>
         <span className="text-sm opacity-70">Novo Serviço</span>
       </header>
 
       {/* Card do formulário */}
-      <div className="w-full max-w-4xl bg-white rounded-b shadow-md p-6 flex flex-col mx-auto">
+      <div className="w-full max-w-5xl bg-white rounded-b shadow-md p-6 flex flex-col mx-auto">
         <Toaster position="top-right" />
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
