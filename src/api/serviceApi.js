@@ -47,3 +47,23 @@ export const getServiceById = async (id) => {
     throw err;
   }
 };
+
+export const getFilteredServices = async (filters) => {
+  const params = {};
+
+  if (filters.tipo) params.tipo = filters.tipo;
+  
+  if (filters.dataInicio && filters.dataFim) {
+    const inicio = new Date(filters.dataInicio);
+    inicio.setHours(0, 0, 0, 0);
+
+    const fim = new Date(filters.dataFim);
+    fim.setHours(23, 59, 59, 999);
+
+    params.dataInicio = inicio.toISOString();
+    params.dataFim = fim.toISOString();
+  }
+
+  const response = await axios.get(`${API_URL}/filter`, { params });
+  return response.data.data;
+};
