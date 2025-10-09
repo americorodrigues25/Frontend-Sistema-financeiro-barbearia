@@ -124,22 +124,20 @@ const AdvancedSearch = () => {
   };
 
   return (
-    <div className="h-full flex flex-col items-center justify-start bg-gray-100 min-h-screen p-6">
+    <div className="h-full flex flex-col items-center justify-start bg-gray-100 min-h-screen px-4 sm:px-6 md:px-8 py-6">
       <header className="w-full max-w-5xl bg-gray-900 text-white p-4 rounded-t shadow-md mb-6 flex items-center justify-between">
         <h1 className="text-lg font-bold">Relatório de Serviços</h1>
         <span className="text-sm opacity-70">Busca Avançada</span>
       </header>
 
-      <div className="w-full max-w-5xl bg-white rounded-b shadow-md p-6 flex flex-col">
+      <div className="w-full max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-5xl bg-white rounded-b shadow-md p-4 sm:p-6 flex flex-col mx-auto">
         <Toaster position="top-right" />
 
         {/* Formulário de filtros */}
         <form onSubmit={handleSearch} className="flex flex-col gap-6">
-          {/* filtros */}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
-            <label className="w-full sm:w-1/4 text-gray-700 font-medium mb-1 sm:mb-0">
-              Tipo de Corte:
-            </label>
+          {/* Tipo de serviço */}
+          <div className="flex flex-col md:flex-row md:items-center md:gap-4">
+            <label className="w-full md:w-1/3 text-gray-700 font-medium mb-1 md:mb-0">Tipo de Corte:</label>
             <select
               name="tipo"
               value={filters.tipo}
@@ -150,20 +148,16 @@ const AdvancedSearch = () => {
               <option value="Corte Adulto">Corte Adulto</option>
               <option value="Corte Infantil">Corte Infantil</option>
               <option value="Barba Simples">Barba Simples</option>
-              <option value="Combo (Corte + Barba)">
-                Combo (Corte + Barba)
-              </option>
+              <option value="Combo (Corte + Barba)">Combo (Corte + Barba)</option>
               <option value="Tintura">Tintura</option>
               <option value="Outro">Outro</option>
             </select>
           </div>
 
-          {/* período */}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
-            <label className="w-full sm:w-1/4 text-gray-700 font-medium mb-1 sm:mb-0">
-              Período:
-            </label>
-            <div className="flex gap-4 flex-1">
+          {/* Período */}
+          <div className="flex flex-col md:flex-row md:items-center md:gap-4">
+            <label className="w-full md:w-1/3 text-gray-700 font-medium mb-1 md:mb-0">Período:</label>
+            <div className="flex gap-4 flex-1 flex-col sm:flex-row">
               <div className="flex flex-col flex-1">
                 <span className="text-sm text-gray-500 mb-1">De:</span>
                 <DatePicker
@@ -189,11 +183,12 @@ const AdvancedSearch = () => {
             </div>
           </div>
 
-          <div className="flex justify-end gap-3 mt-6">
+          {/* Botões de ação */}
+          <div className="flex flex-col sm:flex-row sm:justify-end gap-3 mt-4">
             <button
               type="submit"
               disabled={loading}
-              className="bg-amber-500 hover:bg-amber-600 text-white font-semibold px-6 py-2 rounded-lg shadow-md transition flex items-center gap-2 disabled:opacity-60"
+              className="bg-amber-500 hover:bg-amber-600 text-white font-semibold px-6 py-2 rounded-lg shadow-md transition flex items-center gap-2 disabled:opacity-60 justify-center"
             >
               <FaSearch />
               {loading ? "Buscando..." : "Buscar"}
@@ -202,9 +197,7 @@ const AdvancedSearch = () => {
               data={results}
               periodo={
                 filters.dataInicio && filters.dataFim
-                  ? `Período: ${filters.dataInicio.toLocaleDateString(
-                      "pt-BR"
-                    )} até ${filters.dataFim.toLocaleDateString("pt-BR")}`
+                  ? `Período: ${filters.dataInicio.toLocaleDateString("pt-BR")} até ${filters.dataFim.toLocaleDateString("pt-BR")}`
                   : "Período: Todos"
               }
             />
@@ -256,11 +249,10 @@ const AdvancedSearch = () => {
                 <button
                   key={i}
                   onClick={() => handlePageChange(i + 1)}
-                  className={`px-3 py-1 rounded ${
-                    currentPage === i + 1
+                  className={`px-3 py-1 rounded ${currentPage === i + 1
                       ? "bg-orange-500 text-white"
                       : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                  }`}
+                    }`}
                 >
                   {i + 1}
                 </button>
@@ -295,9 +287,8 @@ const AdvancedSearch = () => {
 
       {toast.show && (
         <div
-          className={`fixed top-5 right-5 px-4 py-2 rounded shadow text-white ${
-            toast.type === "success" ? "bg-green-500" : "bg-red-500"
-          }`}
+          className={`fixed top-5 right-5 px-4 py-2 rounded shadow text-white ${toast.type === "success" ? "bg-green-500" : "bg-red-500"
+            }`}
         >
           {toast.message}
         </div>

@@ -9,7 +9,7 @@ export default function EditServiceModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="bg-white rounded-lg p-6 w-96 shadow-xl">
         <h2 className="text-lg font-bold mb-4">Editar Serviço</h2>
 

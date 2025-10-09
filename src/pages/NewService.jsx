@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { createService } from "../api/serviceApi"; 
+import { createService } from "../api/serviceApi";
 
 const NewService = () => {
   const [formData, setFormData] = useState({
@@ -9,7 +9,6 @@ const NewService = () => {
     data: "",
   });
   const [loading, setLoading] = useState(false);
-  const [mensagem, setMensagem ] = useState(null);
 
   const handleChange = (e) => {
     setFormData({
@@ -30,8 +29,8 @@ const NewService = () => {
 
     try {
       const response = await createService(dataParaEnviar);
-
       const novoServico = response.data;
+
       toast.success(
         <div className="flex flex-col">
           <span className="font-bold">Cadastrado com sucesso!</span>
@@ -50,21 +49,21 @@ const NewService = () => {
   };
 
   return (
-    <div className="h-full flex flex-col items-center justify-start bg-gray-100 min-h-screen p-6">
-      {/* Header do sistema */}
-      <header className="w-full max-w-5xl bg-gray-900 text-white p-4 rounded-t shadow-md mb-6 flex items-center justify-between">
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center px-4 sm:px-6 md:px-8 py-6">
+      {/* Header */}
+      <header className="w-full max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-5xl bg-gray-900 text-white p-4 rounded-t shadow-md mb-4 flex items-center justify-between">
         <h1 className="text-lg font-bold">Serviços</h1>
         <span className="text-sm opacity-70">Novo Serviço</span>
       </header>
 
-      {/* Card do formulário */}
-      <div className="w-full max-w-5xl bg-white rounded-b shadow-md p-6 flex flex-col mx-auto">
+      {/* Card Form */}
+      <div className="w-full max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-5xl bg-white rounded-b shadow-md p-4 sm:p-6 flex flex-col mx-auto">
         <Toaster position="top-right" />
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          {/* Tipo e Valor em linha */}
-          <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
-            <label className="w-full sm:w-1/4 text-gray-700 font-medium mb-1 sm:mb-0">
+          {/* Tipo e Valor lado a lado em md+ */}
+          <div className="flex flex-col md:flex-row md:items-center md:gap-4">
+            <label className="w-full md:w-1/3 text-gray-700 font-medium mb-1 md:mb-0">
               Tipo de Serviço:
             </label>
             <select
@@ -78,16 +77,14 @@ const NewService = () => {
               <option value="Corte Adulto">Corte Adulto</option>
               <option value="Corte Infantil">Corte Infantil</option>
               <option value="Barba Simples">Barba Simples</option>
-              <option value="Combo (Corte + Barba)">
-                Combo (Corte + Barba)
-              </option>
+              <option value="Combo (Corte + Barba)">Combo (Corte + Barba)</option>
               <option value="Tintura">Tintura</option>
               <option value="Outro">Outro</option>
             </select>
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
-            <label className="w-full sm:w-1/4 text-gray-700 font-medium mb-1 sm:mb-0">
+          <div className="flex flex-col md:flex-row md:items-center md:gap-4">
+            <label className="w-full md:w-1/3 text-gray-700 font-medium mb-1 md:mb-0">
               Valor (R$):
             </label>
             <input
@@ -102,8 +99,9 @@ const NewService = () => {
             />
           </div>
 
-          <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4">
-            <label className="w-full sm:w-1/4 text-gray-700 font-medium mb-1 sm:mb-0">
+          {/* Data do serviço ocupa toda a linha */}
+          <div className="flex flex-col md:flex-row md:items-center md:gap-4">
+            <label className="w-full md:w-1/3 text-gray-700 font-medium mb-1 md:mb-0">
               Data do Serviço:
             </label>
             <input
@@ -116,7 +114,7 @@ const NewService = () => {
           </div>
 
           {/* Botão de envio */}
-          <div className="flex justify-end mt-4">
+          <div className="flex w-full justify-center md:justify-end mt-4">
             <button
               type="submit"
               disabled={loading}
@@ -126,17 +124,6 @@ const NewService = () => {
             </button>
           </div>
         </form>
-
-        {/* Mensagem de sucesso/erro */}
-        {mensagem && (
-          <div
-            className={`mt-3 px-3 py-2 text-sm text-white transition-opacity duration-500 ${
-              mensagem.type === "success" ? "bg-green-500/90" : "bg-red-500/90"
-            } rounded`}
-          >
-            {mensagem.text}
-          </div>
-        )}
       </div>
     </div>
   );
