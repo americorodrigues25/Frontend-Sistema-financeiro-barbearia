@@ -55,7 +55,7 @@ const ExportPDF = ({ data, filename = "relatorio.pdf", periodo }) => {
     <button
       onClick={handleExport}
       disabled={!data.length}
-      className="bg-red-500 hover:bg-red-600 text-white font-semibold px-6 py-2 rounded-lg shadow-md transition flex items-center gap-2 disabled:opacity-60"
+      className="bg-red-500 hover:bg-red-600 text-white font-semibold px-6 py-2 rounded-lg shadow-md transition flex justify-center items-center gap-2 disabled:opacity-60"
     >
       <FaFilePdf />
       Exportar PDF

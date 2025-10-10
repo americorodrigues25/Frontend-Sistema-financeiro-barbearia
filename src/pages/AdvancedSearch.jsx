@@ -125,7 +125,7 @@ const AdvancedSearch = () => {
 
   return (
     <div className="h-full flex flex-col items-center justify-start bg-gray-100 min-h-screen px-4 sm:px-6 md:px-8 py-6">
-      <header className="w-full max-w-5xl bg-gray-900 text-white p-4 rounded-t shadow-md mb-6 flex items-center justify-between">
+      <header className="w-full max-w-5xl bg-gray-900 text-white p-4 rounded-t shadow-md mb-4 flex items-center justify-between">
         <h1 className="text-lg font-bold">Relatório de Serviços</h1>
         <span className="text-sm opacity-70">Busca Avançada</span>
       </header>
@@ -221,7 +221,7 @@ const AdvancedSearch = () => {
                   <tr key={item._id} className="border-t hover:bg-gray-50">
                     <td className="px-4 py-2">{item.tipo}</td>
                     <td className="px-4 py-2">
-                      R$ {Number(item.valor).toFixed(2)}
+                      R$ {Number(item.valor).toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </td>
                     <td className="px-4 py-2">
                       {new Date(item.data).toLocaleDateString("pt-BR")}

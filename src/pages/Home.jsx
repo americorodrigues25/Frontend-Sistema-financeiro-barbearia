@@ -15,6 +15,7 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
+  LabelList
 } from "recharts";
 
 // icons
@@ -142,33 +143,34 @@ export default function Home() {
       </h1>
 
       {/* Cards Totais */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-20 mb-6">
-        <div className="bg-gray-900 p-4 rounded shadow-xl h-32">
-          <div className="flex justify-between items-start mb-5">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-6">
+        <div className="bg-gray-900 p-4 rounded shadow-xl h-32 flex flex-col justify-between items-center text-center overflow-hidden">
+          <div className="flex justify-between items-start w-full mb-5">
             <h2 className="text-base font-semibold text-white">Diário</h2>
             <div className="bg-white p-1 rounded-full">
               <MdAttachMoney className="text-gray-900 text-xl" />
             </div>
           </div>
           <p className="text-[28px] font-bold text-white text-center">
-            R$ {totalDia.toFixed(2)}
+            R$ {totalDia.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </p>
         </div>
 
-        <div className="bg-white p-4 rounded shadow-xl h-32">
-          <div className="flex justify-between items-start mb-5">
+        <div className="bg-white p-4 rounded shadow-xl h-32 flex flex-col justify-between items-center text-center overflow-hidden">
+          <div className="flex justify-between items-start w-full mb-3">
             <h2 className="text-base font-semibold text-gray-900">Mensal</h2>
             <div className="bg-gray-900 p-1 rounded-full">
               <MdAttachMoney className="text-white text-xl" />
             </div>
           </div>
-          <p className="text-[28px] font-bold text-gray-900 text-center">
-            R${totalMes.toFixed(2)}
+          <p className="font-bold text-gray-900 text-center break-words leading-tight text-[28px]">
+            R$ {totalMes.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
           </p>
         </div>
 
-        <div className="bg-white p-4 rounded shadow-xl h-32">
-          <div className="flex justify-between items-start mb-5">
+
+        <div className="bg-white p-4 rounded shadow-xl h-32 flex flex-col justify-between items-center text-center overflow-hidden">
+          <div className="flex justify-between items-start w-full mb-5">
             <h2 className="text-lg font-semibold text-gray-900">
               Serviços
             </h2>
@@ -203,7 +205,7 @@ export default function Home() {
               {ultimosServicos.map((s) => (
                 <tr key={s._id} className="border-b">
                   <td className="py-2 px-3">{s.tipo}</td>
-                  <td className="py-2 px-3">R$ {s.valor.toFixed(2)}</td>
+                  <td className="py-2 px-3">R$ {s.valor.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
                   <td className="py-2 px-3">
                     {new Date(s.data).toLocaleDateString("pt-BR")}
                   </td>
@@ -282,10 +284,10 @@ export default function Home() {
       {/* Gráfico de valores da semana com total */}
       <div className="bg-white p-4 rounded shadow-xl mb-10">
         <div className="flex flex-wrap justify-between items-center mb-2 px-2">
-          <h2 className="text-base font-bold text-gray-900 mb-1">
+          <div className="text-gray-900 font-semibold mb-2 text-sm sm:text-base text-center">
             Valores da Semana
-          </h2>
-          <p className="text-sm md:text-base font-bold text-gray-900">
+          </div>
+          <p className="text-xs sm:text-base text-center text-gray-600 mb-4">
             Total: R$
             {dadosSemana.reduce((acc, d) => acc + d.total, 0).toFixed(2)}
           </p>
@@ -295,12 +297,18 @@ export default function Home() {
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={dadosSemana}
-              margin={{ top: 10, right: 10, left: -15, bottom: 0 }}
+              margin={{ top: 10, right: 10, left: -25, bottom: 0 }}
               barCategoryGap="25%"
             >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="dia" style={{ fill: "#1f2937" }} />
-              <YAxis style={{ fill: "#1f2937" }} />
+              <YAxis
+                style={{ fill: "#1f2937", fontSize: "14px" }}
+                domain={[0, (dataMax) => dataMax * 1.2]}
+                tickFormatter={(value) =>
+                  value >= 1000 ? `${(value / 1000).toFixed(0)}k` : value
+                }
+              />
               <Tooltip />
               <Bar dataKey="total" fill="#1f2937" radius={[6, 6, 0, 0]} />
             </BarChart>
@@ -311,10 +319,10 @@ export default function Home() {
       {/* Gráfico de serviços da semana */}
       <div className="bg-white p-4 rounded shadow-xl mb-10">
         <div className="flex flex-wrap justify-between items-center mb-2 px-2">
-          <h2 className="text-base font-bold text-gray-900 mb-1">
+          <div className="text-gray-900 font-semibold mb-2 text-sm sm:text-base text-center">
             Serviços da Semana
-          </h2>
-          <p className="text-sm md:text-base font-bold text-gray-900">
+          </div>
+          <p className="text-xs sm:text-base text-center text-gray-600 mb-4">
             Total: {dadosSemana.reduce((acc, d) => acc + d.quantidade, 0)}
           </p>
         </div>
@@ -323,13 +331,13 @@ export default function Home() {
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={dadosSemana}
-              margin={{ top: 10, right: 10, left: -15, bottom: 0 }}
+              margin={{ top: 10, right: 10, left: -25, bottom: 0 }}
               barCategoryGap="25%"
             >
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="dia" style={{ fill: "#1f2937" }} />
               <YAxis
-                style={{ fill: "#1f2937" }}
+                style={{ fill: "#1f2937", fontSize: "14px" }}
                 tickFormatter={(value) => Math.round(value)}
               />
               <Tooltip />
