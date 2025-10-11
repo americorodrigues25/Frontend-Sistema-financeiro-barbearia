@@ -15,7 +15,6 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  LabelList
 } from "recharts";
 
 // icons
@@ -26,6 +25,7 @@ import { FaEdit, FaTrash } from "react-icons/fa";
 import EditServiceModal from "../components/modals/EditServiceModal";
 import DeleteServiceModal from "../components/modals/DeleteServiceModal";
 
+// api
 const API_URL = "http://localhost:5000/api/services";
 
 export default function Home() {
@@ -41,7 +41,7 @@ export default function Home() {
     type: "success",
   });
 
-  // controle modal
+  // modal
   const [showModal, setShowModal] = useState(false);
   const [editService, setEditService] = useState(null);
   const [formData, setFormData] = useState({ tipo: "", valor: "", data: "" });
@@ -50,10 +50,10 @@ export default function Home() {
 
   const showToast = (message, type = "success") => {
     setToast({ show: true, message, type });
-    setTimeout(() => setToast({ show: false, message: "", type }), 3000); // desaparece após 3s
+    setTimeout(() => setToast({ show: false, message: "", type }), 3000);
   };
 
-  // 🔄 função centralizada para buscar dashboard
+  // buscar dados do dashboard
   const fetchDashboard = async () => {
     try {
       const resDia = await axios.get(`${API_URL}/total/day`);
@@ -75,7 +75,6 @@ export default function Home() {
     }
   };
 
-  // formata data para input type=date
   const formatDateInput = (date) => {
     const d = new Date(date);
     const year = d.getFullYear();
@@ -84,12 +83,10 @@ export default function Home() {
     return `${year}-${month}-${day}`;
   };
 
-  // 🔄 carregamento inicial
   useEffect(() => {
     fetchDashboard();
   }, []);
 
-  // abrir modal de edição
   const openEditModal = (service) => {
     setEditService(service);
     setFormData({
@@ -100,13 +97,11 @@ export default function Home() {
     setShowModal(true);
   };
 
-  // função abrir modal de delete
   const openDeleteModal = (service) => {
     setServiceToDelete(service);
     setShowDeleteModal(true);
   };
 
-  // enviar edição
   const submitEdit = async () => {
     if (!editService) return;
 
@@ -121,13 +116,12 @@ export default function Home() {
     }
   };
 
-  // confirmar delete
   const confirmDelete = async () => {
     if (!serviceToDelete) return;
 
     try {
       await handleDeleteService(serviceToDelete._id);
-      await fetchDashboard(); // atualiza sem reload
+      await fetchDashboard();
       setShowDeleteModal(false);
       showToast("Serviço excluído com sucesso!", "success");
     } catch (err) {
@@ -142,7 +136,7 @@ export default function Home() {
         Dashboard Barbearia
       </h1>
 
-      {/* Cards Totais */}
+      {/* Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-6">
         <div className="bg-gray-900 p-4 rounded shadow-xl h-32 flex flex-col justify-between items-center text-center overflow-hidden">
           <div className="flex justify-between items-start w-full mb-5">
@@ -152,7 +146,11 @@ export default function Home() {
             </div>
           </div>
           <p className="text-[28px] font-bold text-white text-center">
-            R$ {totalDia.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            R${" "}
+            {totalDia.toLocaleString("pt-BR", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
           </p>
         </div>
 
@@ -164,16 +162,17 @@ export default function Home() {
             </div>
           </div>
           <p className="font-bold text-gray-900 text-center break-words leading-tight text-[28px]">
-            R$ {totalMes.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            R${" "}
+            {totalMes.toLocaleString("pt-BR", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
           </p>
         </div>
 
-
         <div className="bg-white p-4 rounded shadow-xl h-32 flex flex-col justify-between items-center text-center overflow-hidden">
           <div className="flex justify-between items-start w-full mb-5">
-            <h2 className="text-lg font-semibold text-gray-900">
-              Serviços
-            </h2>
+            <h2 className="text-lg font-semibold text-gray-900">Serviços</h2>
             <div className="bg-gray-900 p-1 rounded-full">
               <MdContentCut className="text-white text-xl" />
             </div>
@@ -184,13 +183,11 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Últimos serviços cadastrados */}
       <div className="bg-white p-4 rounded shadow-xl mb-10">
         <h2 className="text-base font-bold mb-3 text-gray-900">
           Últimos Serviços Cadastrados
         </h2>
 
-        {/* Tabela - visível apenas em telas médias ou maiores */}
         <div className="hidden sm:block">
           <table className="w-full text-left border-collapse">
             <thead>
@@ -205,7 +202,13 @@ export default function Home() {
               {ultimosServicos.map((s) => (
                 <tr key={s._id} className="border-b">
                   <td className="py-2 px-3">{s.tipo}</td>
-                  <td className="py-2 px-3">R$ {s.valor.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                  <td className="py-2 px-3">
+                    R${" "}
+                    {s.valor.toLocaleString("pt-BR", {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })}
+                  </td>
                   <td className="py-2 px-3">
                     {new Date(s.data).toLocaleDateString("pt-BR")}
                   </td>
@@ -229,7 +232,7 @@ export default function Home() {
           </table>
         </div>
 
-        {/* Cards - visível apenas no mobile */}
+        {/* Cards - mobile */}
         <div className="flex flex-col gap-4 sm:hidden">
           {ultimosServicos.map((s) => (
             <div
@@ -243,7 +246,9 @@ export default function Home() {
                 </span>
               </div>
               <div className="flex justify-between items-center">
-                <p className="text-gray-800 font-medium">R$ {s.valor.toFixed(2)}</p>
+                <p className="text-gray-800 font-medium">
+                  R$ {s.valor.toFixed(2)}
+                </p>
                 <div className="flex gap-3">
                   <button
                     onClick={() => openEditModal(s)}
@@ -264,7 +269,6 @@ export default function Home() {
         </div>
       </div>
 
-
       <EditServiceModal
         isOpen={showModal}
         onClose={() => setShowModal(false)}
@@ -281,7 +285,7 @@ export default function Home() {
         onConfirm={confirmDelete}
       />
 
-      {/* Gráfico de valores da semana com total */}
+      {/* Graficos */}
       <div className="bg-white p-4 rounded shadow-xl mb-10">
         <div className="flex flex-wrap justify-between items-center mb-2 px-2">
           <div className="text-gray-900 font-semibold mb-2 text-sm sm:text-base text-center">
@@ -316,7 +320,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Gráfico de serviços da semana */}
       <div className="bg-white p-4 rounded shadow-xl mb-10">
         <div className="flex flex-wrap justify-between items-center mb-2 px-2">
           <div className="text-gray-900 font-semibold mb-2 text-sm sm:text-base text-center">
@@ -349,8 +352,9 @@ export default function Home() {
 
       {toast.show && (
         <div
-          className={`fixed top-5 right-5 px-4 py-2 rounded shadow text-white ${toast.type === "success" ? "bg-green-500" : "bg-red-500"
-            }`}
+          className={`fixed top-5 right-5 px-4 py-2 rounded shadow text-white ${
+            toast.type === "success" ? "bg-green-500" : "bg-red-500"
+          }`}
         >
           {toast.message}
         </div>

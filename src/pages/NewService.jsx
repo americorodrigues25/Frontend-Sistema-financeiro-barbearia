@@ -1,5 +1,9 @@
 import React, { useState } from "react";
+
+// bibliotecas externas
 import toast, { Toaster } from "react-hot-toast";
+
+// api  
 import { createService } from "../api/serviceApi";
 
 const NewService = () => {
@@ -52,16 +56,15 @@ const NewService = () => {
     <div className="min-h-screen bg-gray-100 flex flex-col items-center px-4 sm:px-6 md:px-8 py-6">
       {/* Header */}
       <header className="w-full max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-5xl bg-gray-900 text-white p-4 rounded-t shadow-md mb-4 flex items-center justify-between">
-        <h1 className="text-lg font-bold">Serviços</h1>
+        <h2 className="text-lg font-bold">Serviços</h2>
         <span className="text-sm opacity-70">Novo Serviço</span>
       </header>
 
-      {/* Card Form */}
       <div className="w-full max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-5xl bg-white rounded-b shadow-md p-4 sm:p-6 flex flex-col mx-auto">
         <Toaster position="top-right" />
 
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-          {/* Tipo e Valor lado a lado em md+ */}
+          
           <div className="flex flex-col md:flex-row md:items-center md:gap-4">
             <label className="w-full md:w-1/3 text-gray-700 font-medium mb-1 md:mb-0">
               Tipo de Serviço:
@@ -74,11 +77,14 @@ const NewService = () => {
               className="flex-1 border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition"
             >
               <option value="">Selecione...</option>
-              <option value="Corte Adulto">Corte Adulto</option>
-              <option value="Corte Infantil">Corte Infantil</option>
-              <option value="Barba Simples">Barba Simples</option>
-              <option value="Combo (Corte + Barba)">Combo (Corte + Barba)</option>
-              <option value="Tintura">Tintura</option>
+              <option value="Cabelo">Cabelo</option>
+              <option value="Cabelo + Barba">Cabelo + Barba</option>
+              <option value="Pezinho">Pezinho</option>
+              <option value="Sobrancelha">Sobrancelha</option>
+              <option value="Luzes">Luzes</option>
+              <option value="Platinado">Platinado</option>
+              <option value="Hidratação">Hidratação</option>
+              <option value="Alisamento">Alisamento</option>
               <option value="Outro">Outro</option>
             </select>
           </div>
@@ -99,7 +105,6 @@ const NewService = () => {
             />
           </div>
 
-          {/* Data do serviço ocupa toda a linha */}
           <div className="flex flex-col md:flex-row md:items-center md:gap-4">
             <label className="w-full md:w-1/3 text-gray-700 font-medium mb-1 md:mb-0">
               Data do Serviço:
@@ -113,7 +118,6 @@ const NewService = () => {
             />
           </div>
 
-          {/* Botão de envio */}
           <div className="flex w-full justify-center md:justify-end mt-4">
             <button
               type="submit"
