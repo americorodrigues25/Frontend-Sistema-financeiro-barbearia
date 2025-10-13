@@ -26,9 +26,10 @@ import EditServiceModal from "../components/modals/EditServiceModal";
 import DeleteServiceModal from "../components/modals/DeleteServiceModal";
 
 // api
-const API_URL = "http://localhost:5000/api/services";
+const API_URL = process.env.REACT_APP_API_URL;
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(true);
   const [totalDia, setTotalDia] = useState(0);
   const [totalMes, setTotalMes] = useState(0);
   const [quantidadeMes, setQuantidadeMes] = useState(0);
@@ -55,23 +56,30 @@ export default function Home() {
 
   // buscar dados do dashboard
   const fetchDashboard = async () => {
+    setIsLoading(true);
     try {
-      const resDia = await axios.get(`${API_URL}/total/day`);
+      const [resDia, resMes, resSemana, resUltimos] = await Promise.all([
+        axios.get(`${API_URL}/services/total/day`),
+        axios.get(`${API_URL}/services/total/month`),
+        axios.get(`${API_URL}/services/week`),
+        axios.get(`${API_URL}/services/last`),
+      ]);
+
       if (resDia.data.success) setTotalDia(resDia.data.total);
 
-      const resMes = await axios.get(`${API_URL}/total/month`);
       if (resMes.data.success) {
         setTotalMes(resMes.data.total);
         setQuantidadeMes(resMes.data.quantidade);
       }
 
-      const resSemana = await axios.get(`${API_URL}/week`);
       if (resSemana.data.success) setDadosSemana(resSemana.data.dadosSemana);
 
-      const resUltimos = await axios.get(`${API_URL}/last`);
       if (resUltimos.data.success) setUltimosServicos(resUltimos.data.ultimos);
     } catch (err) {
       console.error("Erro ao carregar dashboard:", err);
+    } finally {
+      // 2b. DESLIGA O LOADER DEPOIS QUE TUDO TERMINA (Sucesso ou Falha)
+      setIsLoading(false);
     }
   };
 
@@ -129,6 +137,17 @@ export default function Home() {
       showToast("Erro ao excluir serviço", "error");
     }
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center h-[calc(100vh-80px)]">
+        <div className="flex flex-col items-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900 mb-4"></div>
+          <p className="text-xl text-gray-700">Carregando Dashboard...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="md:px-10 ">
