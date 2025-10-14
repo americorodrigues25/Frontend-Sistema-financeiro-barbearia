@@ -62,10 +62,6 @@ export default function Login() {
           className="w-full mb-4 p-3 rounded-md border border-gray-300 bg-gray-50 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-800"
         />
 
-        <div className="w-full flex justify-end text-sm text-gray-600 mb-6">
-          <p className="hover:underline cursor-pointer">Esqueceu a senha?</p>
-        </div>
-
         <button
           type="submit"
           className="w-full bg-gray-900 text-white p-3 rounded-lg hover:bg-gray-800 transition-all"
