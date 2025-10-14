@@ -20,6 +20,7 @@ import {
 // icons
 import { MdAttachMoney, MdContentCut } from "react-icons/md";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { ImSpinner2 } from "react-icons/im";
 
 // components
 import EditServiceModal from "../components/modals/EditServiceModal";
@@ -30,6 +31,7 @@ const API_URL = process.env.REACT_APP_API_URL;
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
+
   const [totalDia, setTotalDia] = useState(0);
   const [totalMes, setTotalMes] = useState(0);
   const [quantidadeMes, setQuantidadeMes] = useState(0);
@@ -142,8 +144,8 @@ export default function Home() {
     return (
       <div className="flex justify-center items-center h-[calc(100vh-80px)]">
         <div className="flex flex-col items-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-gray-900 mb-4"></div>
-          <p className="text-xl text-gray-700">Carregando Dashboard...</p>
+          <ImSpinner2 className="animate-spin text-gray-900 text-4xl mb-4" />
+          <p className="text-lg text-gray-700">Carregando Dashboard...</p>
         </div>
       </div>
     );
@@ -371,9 +373,12 @@ export default function Home() {
 
       {toast.show && (
         <div
-          className={`fixed top-5 right-5 px-4 py-2 rounded shadow text-white ${
-            toast.type === "success" ? "bg-green-500" : "bg-red-500"
-          }`}
+          className={`fixed 
+      bottom-5 left-5 right-5 sm:bottom-auto sm:left-auto sm:right-5 sm:top-5  /* posição responsiva */
+      max-w-xs sm:max-w-sm  /* largura máxima para não ficar enorme */
+      px-4 py-3 rounded shadow text-white
+      ${toast.type === "success" ? "bg-green-500" : "bg-red-500"}
+    `}
         >
           {toast.message}
         </div>
