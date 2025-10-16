@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, Outlet, Link } from "react-router-dom";
 
 // icons
-import { MdHome, MdMenu, MdClose, MdLock } from "react-icons/md";
+import { MdHome, MdMenu, MdClose, MdLock, MdSettings } from "react-icons/md";
 import { IoDuplicate } from "react-icons/io5";
 import { FaSearch } from "react-icons/fa";
 
@@ -96,16 +96,14 @@ export default function Nav() {
               </Link>
             </div>
             <div
-              onClick={() => {
-                setMenuOpen(false);
-                setShowPasswordModal(true);
-              }}
-              className="flex items-center pl-2 border-l-4 border-transparent hover:border-amber-500 hover:text-amber-500 transition-all duration-150 ease-in-out shadow-lg py-3 cursor-pointer"
+              onClick={() => setMenuOpen(false)}
+              className="flex items-center pl-2 border-l-4 border-transparent hover:border-amber-500 hover:text-amber-500 transition-all duration-150 ease-in-out shadow-lg py-3"
             >
-              <MdLock className="inline mr-3" />
-              <span className="text-base">Senha</span>
+              <MdSettings className="inline mr-3" />
+              <Link to="/configuracoes" className="text-base">
+                Configurações
+              </Link>
             </div>
-
           </nav>
         </div>
 
