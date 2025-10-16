@@ -7,7 +7,11 @@ import API from "../api/api";
 // router
 import { useNavigate } from "react-router-dom";
 
+// icon
+import { ImSpinner2 } from "react-icons/im";
+
 export default function Login() {
+  const [loading, setLoading] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -15,6 +19,7 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const res = await API.post("/auth/login", { username, password });
 
@@ -23,6 +28,7 @@ export default function Login() {
       navigate("/home");
     } catch (err) {
       setError(err.response?.data?.msg || "Erro ao fazer login");
+      setLoading(false);
     }
   };
 
@@ -64,9 +70,13 @@ export default function Login() {
 
         <button
           type="submit"
-          className="w-full bg-gray-900 text-white p-3 rounded-lg hover:bg-gray-800 transition-all"
+          className="w-full bg-gray-900 text-white p-3 rounded-lg hover:bg-gray-800 transition-all text-center flex justify-center items-center"
         >
-          Entrar
+          {loading ? (
+            <ImSpinner2 className="animate-spin text-white" size={20} />
+          ) : (
+            "Entrar"
+          )}
         </button>
       </form>
     </div>
