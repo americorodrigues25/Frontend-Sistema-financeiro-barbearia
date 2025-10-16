@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import NewService from "./pages/NewService";
 import AdvancedSearch from "./pages/AdvancedSearch";
+import Settings from "./pages/Settings";
 
 // components
 import Nav from "./components/Nav";
@@ -19,6 +20,7 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/novo-servico" element={<NewService />} />
           <Route path="/busca" element={<AdvancedSearch />} />
+          <Route path="/configuracoes" element={<Settings />} />
         </Route>
       </Routes>
     </Router>
