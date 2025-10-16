@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, Outlet, Link } from "react-router-dom";
 
 // icons
-import { MdHome, MdMenu, MdClose, MdLock, MdSettings } from "react-icons/md";
+import { MdHome, MdMenu, MdClose, MdSettings } from "react-icons/md";
 import { IoDuplicate } from "react-icons/io5";
 import { FaSearch } from "react-icons/fa";
 
@@ -11,25 +11,26 @@ import ChangePasswordModal from "./modals/ChangePasswordModal";
 
 export default function Nav() {
   const navigate = useNavigate();
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
 
   const [showPasswordModal, setShowPasswordModal] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    const user = localStorage.getItem("username");
+    const user = localStorage.getItem("name");
 
     if (!token) {
       navigate("/");
     } else {
-      setUsername(user);
+      setName(user);
     }
   }, [navigate]);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
+    localStorage.removeItem("name");
     navigate("/");
   };
 
@@ -47,7 +48,7 @@ export default function Nav() {
       {/* Texto mostrado apenas quando o menu estiver aberto */}
       {!menuOpen && (
         <p className="lg:hidden fixed top-4 right-4 z-50 bg-gray-900 text-white p-2 rounded-md px-4">
-          Olá, {username}
+          Olá, {name}
         </p>
       )}
 

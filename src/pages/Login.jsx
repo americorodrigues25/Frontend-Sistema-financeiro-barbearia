@@ -25,6 +25,7 @@ export default function Login() {
 
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("username", res.data.username);
+      localStorage.setItem("name", res.data.name);
       navigate("/home");
     } catch (err) {
       setError(err.response?.data?.msg || "Erro ao fazer login");
