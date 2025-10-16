@@ -2,14 +2,19 @@ import { useEffect, useState } from "react";
 import { useNavigate, Outlet, Link } from "react-router-dom";
 
 // icons
-import { MdHome, MdMenu, MdClose } from "react-icons/md";
+import { MdHome, MdMenu, MdClose, MdLock } from "react-icons/md";
 import { IoDuplicate } from "react-icons/io5";
 import { FaSearch } from "react-icons/fa";
+
+// components
+import ChangePasswordModal from "./modals/ChangePasswordModal";
 
 export default function Nav() {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -90,6 +95,17 @@ export default function Nav() {
                 Busca Avançada
               </Link>
             </div>
+            <div
+              onClick={() => {
+                setMenuOpen(false);
+                setShowPasswordModal(true);
+              }}
+              className="flex items-center pl-2 border-l-4 border-transparent hover:border-amber-500 hover:text-amber-500 transition-all duration-150 ease-in-out shadow-lg py-3 cursor-pointer"
+            >
+              <MdLock className="inline mr-3" />
+              <span className="text-base">Senha</span>
+            </div>
+
           </nav>
         </div>
 
@@ -107,6 +123,11 @@ export default function Nav() {
       <main className="flex-1 p-6 bg-gray-200 mt-16 h-full lg:mt-0 lg:ml-72 overflow-x-hidden">
         <Outlet />
       </main>
+
+      <ChangePasswordModal
+        isOpen={showPasswordModal}
+        onClose={() => setShowPasswordModal(false)}
+      />
     </div>
   );
 }
