@@ -1,8 +1,11 @@
+import { ImSpinner2 } from "react-icons/im";
+
 export default function DeleteServiceModal({
   isOpen,
   onClose,
   service,
   onConfirm,
+  isSubmitting, // <--- nova prop
 }) {
   if (!isOpen) return null;
 
@@ -21,15 +24,17 @@ export default function DeleteServiceModal({
         <div className="flex justify-end gap-3">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500"
+            disabled={isSubmitting}
+            className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500 disabled:opacity-50"
           >
             Cancelar
           </button>
           <button
             onClick={onConfirm}
-            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+            disabled={isSubmitting}
+            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 disabled:opacity-50 flex items-center justify-center gap-2"
           >
-            Excluir
+            {isSubmitting ? <ImSpinner2 className="animate-spin" /> : "Excluir"}
           </button>
         </div>
       </div>

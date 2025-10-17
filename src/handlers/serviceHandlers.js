@@ -1,19 +1,23 @@
-import axios from "axios";
+import { updateService, deleteService } from "../api/serviceApi";
 
-const API_URL = process.env.REACT_APP_API_URL;
-
+// Edita serviço
 export const handleEditService = async (id, data) => {
   try {
-    await axios.put(`${API_URL}/services/${id}`, data);
+    const res = await updateService(id, data); 
+    return res;
   } catch (err) {
     console.error("Erro ao editar serviço:", err);
+    throw err;
   }
 };
 
+// Deleta serviço
 export const handleDeleteService = async (id) => {
   try {
-    await axios.delete(`${API_URL}/services/${id}`);
+    const res = await deleteService(id); 
+    return res;
   } catch (err) {
     console.error("Erro ao deletar serviço:", err);
+    throw err;
   }
 };

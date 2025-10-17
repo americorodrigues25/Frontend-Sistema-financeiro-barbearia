@@ -1,3 +1,5 @@
+import { ImSpinner2 } from "react-icons/im";
+
 export default function EditServiceModal({
   isOpen,
   onClose,
@@ -5,6 +7,7 @@ export default function EditServiceModal({
   formData,
   setFormData,
   onSubmit,
+  isSubmitting, // nova prop
 }) {
   if (!isOpen) return null;
 
@@ -41,10 +44,7 @@ export default function EditServiceModal({
             type="number"
             value={formData.valor}
             onChange={(e) =>
-              setFormData({
-                ...formData,
-                valor: parseFloat(e.target.value),
-              })
+              setFormData({ ...formData, valor: parseFloat(e.target.value) })
             }
             className="w-full border p-2 rounded"
           />
@@ -63,15 +63,17 @@ export default function EditServiceModal({
         <div className="flex justify-end gap-3">
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500"
+            disabled={isSubmitting}
+            className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500 disabled:opacity-50"
           >
             Cancelar
           </button>
           <button
             onClick={onSubmit}
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            disabled={isSubmitting}
+            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50 flex items-center justify-center gap-2"
           >
-            Salvar
+            {isSubmitting ? <ImSpinner2 className="animate-spin" /> : "Salvar"}
           </button>
         </div>
       </div>

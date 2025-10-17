@@ -36,6 +36,8 @@ import DeleteServiceModal from "../components/modals/DeleteServiceModal";
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const [totalDia, setTotalDia] = useState(0);
   const [totalMes, setTotalMes] = useState(0);
   const [quantidadeMes, setQuantidadeMes] = useState(0);
@@ -106,29 +108,37 @@ export default function Home() {
     setShowDeleteModal(true);
   };
 
+  // Edição
   const submitEdit = async () => {
     if (!editService) return;
+    setIsSubmitting(true); // ativa loading no modal
     try {
       await handleEditService(editService._id, formData);
-      await fetchDashboard();
-      setShowModal(false);
       showToast("Serviço atualizado com sucesso!", "success");
+      setShowModal(false); // fecha modal após sucesso
+      await fetchDashboard(); // atualiza dashboard suavemente
     } catch (err) {
       console.error(err);
       showToast("Erro ao atualizar serviço", "error");
+    } finally {
+      setIsSubmitting(false); // desativa loading
     }
   };
 
+  // Exclusão
   const confirmDelete = async () => {
     if (!serviceToDelete) return;
+    setIsSubmitting(true); // ativa loading no modal
     try {
       await handleDeleteService(serviceToDelete._id);
-      await fetchDashboard();
-      setShowDeleteModal(false);
       showToast("Serviço excluído com sucesso!", "success");
+      setShowDeleteModal(false); // fecha modal após sucesso
+      await fetchDashboard(); // atualiza dashboard
     } catch (err) {
       console.error(err);
       showToast("Erro ao excluir serviço", "error");
+    } finally {
+      setIsSubmitting(false); // desativa loading
     }
   };
 
@@ -289,6 +299,7 @@ export default function Home() {
         formData={formData}
         setFormData={setFormData}
         onSubmit={submitEdit}
+        isSubmitting={isSubmitting}
       />
 
       <DeleteServiceModal
@@ -296,6 +307,7 @@ export default function Home() {
         onClose={() => setShowDeleteModal(false)}
         service={serviceToDelete}
         onConfirm={confirmDelete}
+        isSubmitting={isSubmitting}
       />
 
       {/* Graficos */}
