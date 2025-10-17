@@ -1,9 +1,16 @@
 import { useState, useEffect } from "react";
+
+// bibliotecas externas
 import axios from "axios";
 import { Toaster, toast } from "react-hot-toast";
-import ChangePasswordModal from "../components/modals/ChangePasswordModal";
+
+// icones
 import { ImSpinner2 } from "react-icons/im";
 
+// componentes
+import ChangePasswordModal from "../components/modals/ChangePasswordModal";
+
+// api
 const API_URL = process.env.REACT_APP_API_URL;
 
 export default function Settings() {
@@ -59,13 +66,11 @@ export default function Settings() {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center px-4 sm:px-6 md:px-8 py-6">
-      {/* Header */}
       <header className="w-full max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-5xl bg-gray-900 text-white p-4 rounded-t shadow-md mb-4 flex items-center justify-between">
         <h2 className="text-lg font-bold">Configurações</h2>
         <span className="text-sm opacity-70">Editar</span>
       </header>
 
-      {/* Formulário */}
       <div className="w-full max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-5xl bg-white rounded-b shadow-md p-4 sm:p-6 flex flex-col mx-auto">
         <Toaster position="top-right" />
 

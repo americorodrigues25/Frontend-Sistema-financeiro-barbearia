@@ -23,11 +23,14 @@ export default function EditServiceModal({
             className="w-full border p-2 rounded focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition"
           >
             <option value="">Selecione...</option>
-            <option value="Corte Adulto">Corte Adulto</option>
-            <option value="Corte Infantil">Corte Infantil</option>
-            <option value="Barba Simples">Barba Simples</option>
-            <option value="Combo (Corte + Barba)">Combo (Corte + Barba)</option>
-            <option value="Tintura">Tintura</option>
+            <option value="Cabelo">Cabelo</option>
+            <option value="Cabelo + Barba">Cabelo + Barba</option>
+            <option value="Pezinho">Pezinho</option>
+            <option value="Sobrancelha">Sobrancelha</option>
+            <option value="Luzes">Luzes</option>
+            <option value="Platinado">Platinado</option>
+            <option value="Hidratação">Hidratação</option>
+            <option value="Alisamento">Alisamento</option>
             <option value="Outro">Outro</option>
           </select>
         </label>
@@ -40,7 +43,7 @@ export default function EditServiceModal({
             onChange={(e) =>
               setFormData({
                 ...formData,
-                valor: parseFloat(e.target.value)
+                valor: parseFloat(e.target.value),
               })
             }
             className="w-full border p-2 rounded"

@@ -37,7 +37,6 @@ export default function Nav() {
   return (
     <div className="flex min-h-screen overflow-x-hidden">
       {/* Botão hamburguer (visível apenas no mobile) */}
-      {/* Botão hamburguer */}
       <button
         onClick={() => setMenuOpen(!menuOpen)}
         className="lg:hidden fixed top-4 left-4 z-50 bg-gray-900 text-white p-2 rounded-md"
@@ -45,14 +44,12 @@ export default function Nav() {
         {menuOpen ? <MdClose size={24} /> : <MdMenu size={24} />}
       </button>
 
-      {/* Texto mostrado apenas quando o menu estiver aberto */}
       {!menuOpen && (
         <p className="lg:hidden fixed top-4 right-4 z-50 bg-gray-900 text-white p-2 rounded-md px-4">
           Olá, {name}
         </p>
       )}
 
-      {/* Menu lateral */}
       <aside
         className={`fixed top-0 left-0 h-screen w-72 bg-gray-900 text-white px-4 py-10 flex flex-col justify-between transform transition-transform duration-300 z-40
         ${menuOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}

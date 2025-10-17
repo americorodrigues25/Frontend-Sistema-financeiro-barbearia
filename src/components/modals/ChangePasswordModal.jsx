@@ -1,14 +1,24 @@
 import { useState } from "react";
+
+// bibliotecas
 import axios from "axios";
+
+// icones
 import { MdClose } from "react-icons/md";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+
+const API_URL = process.env.REACT_APP_API_URL;
 
 export default function ChangePasswordModal({ isOpen, onClose }) {
   const [email, setEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [toast, setToast] = useState({ show: false, message: "", type: "success" });
+  const [toast, setToast] = useState({
+    show: false,
+    message: "",
+    type: "success",
+  });
 
   if (!isOpen) return null;
 
@@ -17,7 +27,7 @@ export default function ChangePasswordModal({ isOpen, onClose }) {
     setLoading(true);
 
     try {
-      const response = await axios.put("http://localhost:5000/api/auth/change-password", {
+      const response = await axios.put(`${API_URL}/auth/change-password`, {
         email,
         newPassword,
       });
@@ -31,15 +41,15 @@ export default function ChangePasswordModal({ isOpen, onClose }) {
       setEmail("");
       setNewPassword("");
 
-      // Fecha o modal após 2.5s, tempo suficiente para ler o toast
       setTimeout(() => {
         setToast({ ...toast, show: false });
         onClose();
-      }, 2500);
+      }, 3000);
     } catch (err) {
       setToast({
         show: true,
-        message: err.response?.data?.message || "Erro ao tentar trocar a senha.",
+        message:
+          err.response?.data?.message || "Erro ao tentar trocar a senha.",
         type: "error",
       });
 
@@ -102,7 +112,6 @@ export default function ChangePasswordModal({ isOpen, onClose }) {
           </button>
         </form>
 
-        {/* Toast dentro do modal */}
         {toast.show && (
           <div
             className={`fixed bottom-5 left-5 right-5 sm:bottom-auto sm:left-auto sm:right-5 sm:top-5 max-w-xs sm:max-w-sm px-4 py-3 rounded shadow text-white ${

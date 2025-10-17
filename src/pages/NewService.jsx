@@ -54,7 +54,6 @@ const NewService = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center px-4 sm:px-6 md:px-8 py-6">
-      {/* Header */}
       <header className="w-full max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-5xl bg-gray-900 text-white p-4 rounded-t shadow-md mb-4 flex items-center justify-between">
         <h2 className="text-lg font-bold">Serviços</h2>
         <span className="text-sm opacity-70">Novo Serviço</span>

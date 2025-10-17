@@ -80,7 +80,6 @@ export default function Home() {
     } catch (err) {
       console.error("Erro ao carregar dashboard:", err);
     } finally {
-      // 2b. DESLIGA O LOADER DEPOIS QUE TUDO TERMINA (Sucesso ou Falha)
       setIsLoading(false);
     }
   };
@@ -117,7 +116,7 @@ export default function Home() {
 
     try {
       await handleEditService(editService._id, formData);
-      await fetchDashboard(); // atualiza tudo sem reload
+      await fetchDashboard();
       setShowModal(false);
       showToast("Serviço atualizado com sucesso!", "success");
     } catch (err) {

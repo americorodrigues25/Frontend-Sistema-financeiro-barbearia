@@ -2,20 +2,20 @@ import axios from "axios";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-// Criar novo serviço
+// cria novo serviço
 export const createService = async (data) => {
   try {
     const res = await axios.post(`${API_URL}/services`, data, {
       headers: { "Content-Type": "application/json" },
     });
-    return res.data; // aqui volta o { success: true, data: {...} }
+    return res.data;
   } catch (err) {
     console.error("Erro ao criar serviço:", err);
     throw err;
   }
 };
 
-// Atualizar serviço
+// atualiza serviço
 export const updateService = async (id, data) => {
   try {
     const res = await axios.put(`${API_URL}/services/${id}`, data);
@@ -26,7 +26,7 @@ export const updateService = async (id, data) => {
   }
 };
 
-// Deletar serviço
+// deleta serviço
 export const deleteService = async (id) => {
   try {
     const res = await axios.delete(`${API_URL}/services/${id}`);
@@ -37,7 +37,7 @@ export const deleteService = async (id) => {
   }
 };
 
-// Buscar serviço (exemplo)
+// buscar serviço por id
 export const getServiceById = async (id) => {
   try {
     const res = await axios.get(`${API_URL}/services/${id}`);
