@@ -1,11 +1,14 @@
 // state
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 // api
 import API from "../api/api";
 
 // router
 import { useNavigate } from "react-router-dom";
+
+// context
+import { AuthContext } from "../context/AuthContext";
 
 // icon
 import { ImSpinner2 } from "react-icons/im";
@@ -16,12 +19,15 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
       const res = await API.post("/auth/login", { username, password });
+
+      login(res.data.token);
 
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("username", res.data.username);

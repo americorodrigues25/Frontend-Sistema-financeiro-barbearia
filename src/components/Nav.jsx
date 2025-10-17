@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate, Outlet, Link } from "react-router-dom";
 
 // icons
@@ -6,28 +6,28 @@ import { MdHome, MdMenu, MdClose, MdSettings } from "react-icons/md";
 import { IoDuplicate } from "react-icons/io5";
 import { FaSearch } from "react-icons/fa";
 
-// components
-import ChangePasswordModal from "./modals/ChangePasswordModal";
+// context
+import { AuthContext } from "../context/AuthContext";
 
 export default function Nav() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
-
-  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const { logout, isLoggedIn } = useContext(AuthContext);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     const user = localStorage.getItem("name");
 
-    if (!token) {
+    if (!isLoggedIn || !token) {
       navigate("/");
     } else {
       setName(user);
     }
-  }, [navigate]);
+  }, [isLoggedIn, navigate]);
 
   const handleLogout = () => {
+    logout();
     localStorage.removeItem("token");
     localStorage.removeItem("username");
     localStorage.removeItem("name");
@@ -120,10 +120,6 @@ export default function Nav() {
         <Outlet />
       </main>
 
-      <ChangePasswordModal
-        isOpen={showPasswordModal}
-        onClose={() => setShowPasswordModal(false)}
-      />
     </div>
   );
 }
