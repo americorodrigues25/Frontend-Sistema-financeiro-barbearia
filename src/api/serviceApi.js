@@ -2,10 +2,11 @@ import axios from "axios";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
+// Pega o token do localStorage
 const getToken = () => localStorage.getItem("token");
 
-// Configuração padrão do header Authorization
-const authHeader = () => ({
+// Configura headers com Authorization
+const authHeaders = () => ({
   "Content-Type": "application/json",
   Authorization: `Bearer ${getToken()}`,
 });
@@ -14,9 +15,9 @@ const authHeader = () => ({
 export const createService = async (data) => {
   try {
     const res = await axios.post(`${API_URL}/services`, data, {
-      headers: authHeader(),
+      headers: authHeaders(),
     });
-    return res.data.data; 
+    return res.data;
   } catch (err) {
     console.error("Erro ao criar serviço:", err);
     throw err;
@@ -27,9 +28,9 @@ export const createService = async (data) => {
 export const updateService = async (id, data) => {
   try {
     const res = await axios.put(`${API_URL}/services/${id}`, data, {
-      headers: authHeader(),
+      headers: authHeaders(),
     });
-    return res.data.data; 
+    return res.data;
   } catch (err) {
     console.error("Erro ao atualizar serviço:", err);
     throw err;
@@ -40,9 +41,9 @@ export const updateService = async (id, data) => {
 export const deleteService = async (id) => {
   try {
     const res = await axios.delete(`${API_URL}/services/${id}`, {
-      headers: authHeader(),
+      headers: authHeaders(),
     });
-    return res.data.message; 
+    return res.data;
   } catch (err) {
     console.error("Erro ao deletar serviço:", err);
     throw err;
@@ -53,93 +54,40 @@ export const deleteService = async (id) => {
 export const getServiceById = async (id) => {
   try {
     const res = await axios.get(`${API_URL}/services/${id}`, {
-      headers: authHeader(),
+      headers: authHeaders(),
     });
-    return res.data.data; 
+    return res.data;
   } catch (err) {
-    console.error("Erro ao buscar serviço por ID:", err);
+    console.error("Erro ao buscar serviço:", err);
     throw err;
   }
 };
 
 // buscar serviços filtrados
 export const getFilteredServices = async (filters) => {
+  const params = {};
+
+  if (filters.tipo) params.tipo = filters.tipo;
+
+  if (filters.dataInicio && filters.dataFim) {
+    const inicio = new Date(filters.dataInicio);
+    inicio.setHours(0, 0, 0, 0);
+
+    const fim = new Date(filters.dataFim);
+    fim.setHours(23, 59, 59, 999);
+
+    params.dataInicio = inicio.toISOString();
+    params.dataFim = fim.toISOString();
+  }
+
   try {
-    const params = {};
-
-    if (filters.tipo) params.tipo = filters.tipo;
-
-    if (filters.dataInicio && filters.dataFim) {
-      const inicio = new Date(filters.dataInicio);
-      inicio.setHours(0, 0, 0, 0);
-
-      const fim = new Date(filters.dataFim);
-      fim.setHours(23, 59, 59, 999);
-
-      params.dataInicio = inicio.toISOString();
-      params.dataFim = fim.toISOString();
-    }
-
     const res = await axios.get(`${API_URL}/services/filter`, {
-      headers: authHeader(),
+      headers: authHeaders(),
       params,
     });
-
-    return res.data.data; 
+    return res.data.data;
   } catch (err) {
     console.error("Erro ao buscar serviços filtrados:", err);
-    throw err;
-  }
-};
-
-// obter total do dia
-export const getTotalDay = async () => {
-  try {
-    const res = await axios.get(`${API_URL}/services/total/day`, {
-      headers: authHeader(),
-    });
-    return res.data.total;
-  } catch (err) {
-    console.error("Erro ao obter total do dia:", err);
-    throw err;
-  }
-};
-
-// obter total do mês
-export const getTotalMonth = async () => {
-  try {
-    const res = await axios.get(`${API_URL}/services/total/month`, {
-      headers: authHeader(),
-    });
-    return { total: res.data.total, quantidade: res.data.quantidade };
-  } catch (err) {
-    console.error("Erro ao obter total do mês:", err);
-    throw err;
-  }
-};
-
-// obter dados da semana
-export const getWeek = async () => {
-  try {
-    const res = await axios.get(`${API_URL}/services/week`, {
-      headers: authHeader(),
-    });
-    return res.data.dadosSemana;
-  } catch (err) {
-    console.error("Erro ao obter dados da semana:", err);
-    throw err;
-  }
-};
-
-// obter últimos serviços cadastrados
-export const getLastServices = async () => {
-  try {
-    const res = await axios.get(`${API_URL}/services/last`, {
-      headers: authHeader(),
-    });
-    return res.data.ultimos;
-  } catch (err) {
-    console.error("Erro ao obter últimos serviços:", err);
     throw err;
   }
 };
