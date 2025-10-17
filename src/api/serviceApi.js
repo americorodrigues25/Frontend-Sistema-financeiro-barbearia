@@ -11,6 +11,8 @@ const authHeaders = () => ({
   Authorization: `Bearer ${getToken()}`,
 });
 
+// -------------------- Serviços CRUD -------------------- //
+
 // cria novo serviço
 export const createService = async (data) => {
   try {
@@ -63,7 +65,8 @@ export const getServiceById = async (id) => {
   }
 };
 
-// buscar serviços filtrados
+// -------------------- Serviços Filtrados -------------------- //
+
 export const getFilteredServices = async (filters) => {
   const params = {};
 
@@ -85,9 +88,59 @@ export const getFilteredServices = async (filters) => {
       headers: authHeaders(),
       params,
     });
-    return res.data.data;
+    return res.data.data; // conforme seu backend retorna
   } catch (err) {
     console.error("Erro ao buscar serviços filtrados:", err);
+    throw err;
+  }
+};
+
+// -------------------- Dados para Home -------------------- //
+
+export const getTotalDay = async () => {
+  try {
+    const res = await axios.get(`${API_URL}/services/total/day`, {
+      headers: authHeaders(),
+    });
+    return res.data;
+  } catch (err) {
+    console.error("Erro ao buscar total do dia:", err);
+    throw err;
+  }
+};
+
+export const getTotalMonth = async () => {
+  try {
+    const res = await axios.get(`${API_URL}/services/total/month`, {
+      headers: authHeaders(),
+    });
+    return res.data;
+  } catch (err) {
+    console.error("Erro ao buscar total do mês:", err);
+    throw err;
+  }
+};
+
+export const getWeek = async () => {
+  try {
+    const res = await axios.get(`${API_URL}/services/week`, {
+      headers: authHeaders(),
+    });
+    return res.data;
+  } catch (err) {
+    console.error("Erro ao buscar serviços da semana:", err);
+    throw err;
+  }
+};
+
+export const getLast = async () => {
+  try {
+    const res = await axios.get(`${API_URL}/services/last`, {
+      headers: authHeaders(),
+    });
+    return res.data;
+  } catch (err) {
+    console.error("Erro ao buscar últimos serviços:", err);
     throw err;
   }
 };

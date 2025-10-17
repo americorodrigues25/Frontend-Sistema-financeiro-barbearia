@@ -1,12 +1,19 @@
 import { useEffect, useState } from "react";
 
+// APIs
+import {
+  getTotalDay,
+  getTotalMonth,
+  getWeek,
+  getLast,
+} from "../api/serviceApi";
+
 import {
   handleEditService,
   handleDeleteService,
 } from "../handlers/serviceHandlers";
 
-import axios from "axios";
-
+// gráficos
 import {
   BarChart,
   Bar,
@@ -26,9 +33,6 @@ import { ImSpinner2 } from "react-icons/im";
 import EditServiceModal from "../components/modals/EditServiceModal";
 import DeleteServiceModal from "../components/modals/DeleteServiceModal";
 
-// api
-const API_URL = process.env.REACT_APP_API_URL;
-
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -38,13 +42,9 @@ export default function Home() {
   const [dadosSemana, setDadosSemana] = useState([]);
   const [ultimosServicos, setUltimosServicos] = useState([]);
 
-  const [toast, setToast] = useState({
-    show: false,
-    message: "",
-    type: "success",
-  });
+  const [toast, setToast] = useState({ show: false, message: "", type: "success" });
 
-  // modal
+  // modais
   const [showModal, setShowModal] = useState(false);
   const [editService, setEditService] = useState(null);
   const [formData, setFormData] = useState({ tipo: "", valor: "", data: "" });
@@ -56,29 +56,24 @@ export default function Home() {
     setTimeout(() => setToast({ show: false, message: "", type }), 3000);
   };
 
-  // buscar dados do dashboard
   const fetchDashboard = async () => {
     setIsLoading(true);
     try {
-      const [resDia, resMes, resSemana, resUltimos] = await Promise.all([
-        axios.get(`${API_URL}/services/total/day`),
-        axios.get(`${API_URL}/services/total/month`),
-        axios.get(`${API_URL}/services/week`),
-        axios.get(`${API_URL}/services/last`),
+      const [dia, mes, semana, ultimos] = await Promise.all([
+        getTotalDay(),
+        getTotalMonth(),
+        getWeek(),
+        getLast(),
       ]);
 
-      if (resDia.data.success) setTotalDia(resDia.data.total);
-
-      if (resMes.data.success) {
-        setTotalMes(resMes.data.total);
-        setQuantidadeMes(resMes.data.quantidade);
-      }
-
-      if (resSemana.data.success) setDadosSemana(resSemana.data.dadosSemana);
-
-      if (resUltimos.data.success) setUltimosServicos(resUltimos.data.ultimos);
+      setTotalDia(dia.total || 0);
+      setTotalMes(mes.total || 0);
+      setQuantidadeMes(mes.quantidade || 0);
+      setDadosSemana(semana.dadosSemana || []);
+      setUltimosServicos(ultimos.ultimos || []);
     } catch (err) {
       console.error("Erro ao carregar dashboard:", err);
+      showToast("Erro ao carregar dashboard", "error");
     } finally {
       setIsLoading(false);
     }
@@ -113,7 +108,6 @@ export default function Home() {
 
   const submitEdit = async () => {
     if (!editService) return;
-
     try {
       await handleEditService(editService._id, formData);
       await fetchDashboard();
@@ -127,7 +121,6 @@ export default function Home() {
 
   const confirmDelete = async () => {
     if (!serviceToDelete) return;
-
     try {
       await handleDeleteService(serviceToDelete._id);
       await fetchDashboard();
