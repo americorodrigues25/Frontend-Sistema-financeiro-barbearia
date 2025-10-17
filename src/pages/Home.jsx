@@ -35,6 +35,7 @@ import DeleteServiceModal from "../components/modals/DeleteServiceModal";
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [totalDia, setTotalDia] = useState(0);
@@ -57,8 +58,8 @@ export default function Home() {
     setTimeout(() => setToast({ show: false, message: "", type }), 3000);
   };
 
-  const fetchDashboard = async (showLoading = false) => {
-    if (showLoading) setIsLoading(true);
+  const fetchDashboard = async () => {
+    setIsLoading(true);
     try {
       const [dia, mes, semana, ultimos] = await Promise.all([
         getTotalDay(),
@@ -76,7 +77,7 @@ export default function Home() {
       console.error("Erro ao carregar dashboard:", err);
       showToast("Erro ao carregar dashboard", "error");
     } finally {
-      if (showLoading) setIsLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -89,7 +90,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    fetchDashboard(true);
+    fetchDashboard();
   }, []);
 
   const openEditModal = (service) => {
@@ -110,36 +111,34 @@ export default function Home() {
   // Edição
   const submitEdit = async () => {
     if (!editService) return;
-    setIsSubmitting(true);
+    setIsSubmitting(true); // ativa loading no modal
     try {
       await handleEditService(editService._id, formData);
       showToast("Serviço atualizado com sucesso!", "success");
-      setShowModal(false);
-
-      await fetchDashboard(false); // false = atualiza dados sem mostrar spinner global
+      setShowModal(false); // fecha modal após sucesso
+      await fetchDashboard(); // atualiza dashboard suavemente
     } catch (err) {
       console.error(err);
       showToast("Erro ao atualizar serviço", "error");
     } finally {
-      setIsSubmitting(false);
+      setIsSubmitting(false); // desativa loading
     }
   };
 
   // Exclusão
   const confirmDelete = async () => {
     if (!serviceToDelete) return;
-    setIsSubmitting(true);
+    setIsSubmitting(true); // ativa loading no modal
     try {
       await handleDeleteService(serviceToDelete._id);
       showToast("Serviço excluído com sucesso!", "success");
-      setShowDeleteModal(false);
-
-      await fetchDashboard(false); // atualiza dados sem loading global
+      setShowDeleteModal(false); // fecha modal após sucesso
+      await fetchDashboard(); // atualiza dashboard
     } catch (err) {
       console.error(err);
       showToast("Erro ao excluir serviço", "error");
     } finally {
-      setIsSubmitting(false);
+      setIsSubmitting(false); // desativa loading
     }
   };
 
