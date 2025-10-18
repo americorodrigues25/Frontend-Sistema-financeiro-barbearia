@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { getTotalDay, getTotalMonth, getWeek, getLast } from "../api/serviceApi";
 
 // Hook centralizado
-import useServiceManager from "../hooks/useServiceManager";
+import useServiceManager from "../hook/useServiceManager";
 
 // gráficos
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";

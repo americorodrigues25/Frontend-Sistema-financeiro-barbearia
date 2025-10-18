@@ -15,7 +15,7 @@ import { getFilteredServices } from "../api/serviceApi";
 import ExportPDF from "../utils/ExportPdf";
 
 // Hook centralizado para edição/exclusão
-import useServiceManager from "../hooks/useServiceManager";
+import useServiceManager from "../hook/useServiceManager";
 
 // Modais
 import EditServiceModal from "../components/modals/EditServiceModal";
