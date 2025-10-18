@@ -15,10 +15,7 @@ import { getFilteredServices } from "../api/serviceApi";
 import ExportPDF from "../utils/ExportPdf";
 
 // Handlers
-import {
-  handleEditService,
-  handleDeleteService,
-} from "../handlers/serviceHandlers";
+import { handleEditService, handleDeleteService } from "../handlers/serviceHandlers";
 
 // components
 import EditServiceModal from "../components/modals/EditServiceModal";
@@ -27,23 +24,8 @@ import DeleteServiceModal from "../components/modals/DeleteServiceModal";
 registerLocale("pt-BR", ptBR);
 
 const AdvancedSearch = () => {
-  const [toast, setToast] = useState({
-    show: false,
-    message: "",
-    type: "success",
-  });
-
-  const showToast = (message, type = "success") => {
-    setToast({ show: true, message, type });
-    setTimeout(() => setToast({ show: false, message: "", type }), 3000);
-  };
-
-  const [filters, setFilters] = useState({
-    tipo: "todos",
-    dataInicio: null,
-    dataFim: null,
-  });
-
+  const [toast, setToast] = useState({ show: false, message: "", type: "success" });
+  const [filters, setFilters] = useState({ tipo: "todos", dataInicio: null, dataFim: null });
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -55,32 +37,29 @@ const AdvancedSearch = () => {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
 
-  const handleChange = (e) => {
-    setFilters({ ...filters, [e.target.name]: e.target.value });
+  const showToast = (message, type = "success") => {
+    setToast({ show: true, message, type });
+    setTimeout(() => setToast({ show: false, message: "", type }), 3000);
   };
 
-  const handleDateChange = (name, value) => {
-    setFilters({ ...filters, [name]: value });
-  };
+  const handleChange = (e) => setFilters({ ...filters, [e.target.name]: e.target.value });
+  const handleDateChange = (name, value) => setFilters({ ...filters, [name]: value });
 
   const handleSearch = async (e) => {
     if (e) e.preventDefault();
     setLoading(true);
-
     try {
       const payload = {
         tipo: filters.tipo !== "todos" ? filters.tipo : undefined,
-        dataInicio: filters.dataInicio
-          ? filters.dataInicio.toISOString()
-          : undefined,
+        dataInicio: filters.dataInicio ? filters.dataInicio.toISOString() : undefined,
         dataFim: filters.dataFim ? filters.dataFim.toISOString() : undefined,
       };
-
       const data = await getFilteredServices(payload);
       setResults(data);
       setCurrentPage(1);
     } catch (error) {
       console.error("Erro ao buscar serviços:", error);
+      showToast("Erro ao buscar serviços", "error");
     } finally {
       setLoading(false);
     }
@@ -91,27 +70,46 @@ const AdvancedSearch = () => {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = results.slice(indexOfFirstItem, indexOfLastItem);
   const totalPages = Math.ceil(results.length / itemsPerPage);
-
   const handlePageChange = (page) => setCurrentPage(page);
 
+  // ======== Ajuste de datas ========
+  const formatDateInput = (date) => {
+    if (!date) return "";
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+
+  // ======== Abrir modal de edição ========
   const openEditModal = (service) => {
     setSelectedService(service);
     setFormData({
       tipo: service.tipo,
       valor: service.valor,
-      data: service.data?.slice(0, 10),
+      data: formatDateInput(service.data),
     });
     setIsEditOpen(true);
   };
 
+  // ======== Abrir modal de exclusão ========
   const openDeleteModal = (service) => {
     setSelectedService(service);
     setIsDeleteOpen(true);
   };
 
+  // ======== Submit edição ========
   const handleEditSubmit = async () => {
+    if (!selectedService) return;
     try {
-      await handleEditService(selectedService._id, formData);
+      const adjustedData = {
+        ...formData,
+        data: formData.data
+          ? new Date(formData.data + "T00:00:00").toISOString()
+          : new Date().toISOString(),
+      };
+      await handleEditService(selectedService._id, adjustedData);
       setIsEditOpen(false);
       await handleSearch();
       showToast("Serviço atualizado com sucesso!", "success");
@@ -121,7 +119,9 @@ const AdvancedSearch = () => {
     }
   };
 
+  // ======== Confirmar exclusão ========
   const handleDeleteConfirm = async () => {
+    if (!selectedService) return;
     try {
       await handleDeleteService(selectedService._id);
       setIsDeleteOpen(false);
@@ -143,6 +143,7 @@ const AdvancedSearch = () => {
       <div className="w-full max-w-full sm:max-w-2xl md:max-w-3xl lg:max-w-5xl bg-white rounded-b shadow-md p-4 sm:p-6 flex flex-col mx-auto">
         <Toaster position="top-right" />
 
+        {/* ======== Formulário de filtro ======== */}
         <form onSubmit={handleSearch} className="flex flex-col gap-6">
           <div className="flex flex-col md:flex-row md:items-center md:gap-4">
             <label className="w-full md:w-1/3 text-gray-700 font-medium mb-1 md:mb-0">
@@ -210,15 +211,14 @@ const AdvancedSearch = () => {
               data={results}
               periodo={
                 filters.dataInicio && filters.dataFim
-                  ? `Período: ${filters.dataInicio.toLocaleDateString(
-                      "pt-BR"
-                    )} até ${filters.dataFim.toLocaleDateString("pt-BR")}`
+                  ? `Período: ${filters.dataInicio.toLocaleDateString("pt-BR")} até ${filters.dataFim.toLocaleDateString("pt-BR")}`
                   : "Período: Todos"
               }
             />
           </div>
         </form>
 
+        {/* ======== Tabela de resultados ======== */}
         {results.length > 0 && (
           <div className="mt-8 overflow-x-auto">
             <table className="min-w-full border border-gray-300 rounded-lg">
@@ -281,12 +281,11 @@ const AdvancedSearch = () => {
         )}
 
         {!results.length && !loading && (
-          <p className="text-center text-gray-500 mt-8">
-            Nenhum serviço encontrado.
-          </p>
+          <p className="text-center text-gray-500 mt-8">Nenhum serviço encontrado.</p>
         )}
       </div>
 
+      {/* ======== Modais ======== */}
       <EditServiceModal
         isOpen={isEditOpen}
         onClose={() => setIsEditOpen(false)}
@@ -304,11 +303,7 @@ const AdvancedSearch = () => {
       />
 
       {toast.show && (
-        <div
-          className={`fixed top-5 right-5 px-4 py-2 rounded shadow text-white ${
-            toast.type === "success" ? "bg-green-500" : "bg-red-500"
-          }`}
-        >
+        <div className={`fixed top-5 right-5 px-4 py-2 rounded shadow text-white ${toast.type === "success" ? "bg-green-500" : "bg-red-500"}`}>
           {toast.message}
         </div>
       )}
