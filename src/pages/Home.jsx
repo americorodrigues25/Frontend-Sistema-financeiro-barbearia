@@ -113,7 +113,16 @@ export default function Home() {
     if (!editService) return;
     setIsSubmitting(true); // ativa loading no modal
     try {
-      await handleEditService(editService._id, formData);
+      // Ajusta a data para evitar o problema de fuso horário
+      const adjustedData = {
+        ...formData,
+        data: formData.data
+          ? new Date(formData.data + "T00:00:00").toISOString()
+          : new Date().toISOString(),
+      };
+
+      await handleEditService(editService._id, adjustedData);
+
       showToast("Serviço atualizado com sucesso!", "success");
       setShowModal(false); // fecha modal após sucesso
       await fetchDashboard(); // atualiza dashboard suavemente
