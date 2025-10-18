@@ -11,8 +11,6 @@ const authHeaders = () => ({
   Authorization: `Bearer ${getToken()}`,
 });
 
-// -------------------- Serviços CRUD -------------------- //
-
 // cria novo serviço
 export const createService = async (data) => {
   try {
@@ -65,7 +63,6 @@ export const getServiceById = async (id) => {
   }
 };
 
-// -------------------- Serviços Filtrados -------------------- //
 
 export const getFilteredServices = async (filters) => {
   const params = {};
@@ -94,8 +91,6 @@ export const getFilteredServices = async (filters) => {
     throw err;
   }
 };
-
-// -------------------- Dados para Home -------------------- //
 
 export const getTotalDay = async () => {
   try {
