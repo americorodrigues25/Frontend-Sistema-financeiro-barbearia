@@ -10,11 +10,11 @@ import { FaSearch } from "react-icons/fa";
 import { AuthContext } from "../context/AuthContext";
 
 export default function Nav() {
-  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const { logout, isLoggedIn } = useContext(AuthContext);
-
+  const navigate = useNavigate();
+  
   useEffect(() => {
     const token = localStorage.getItem("token");
     const user = localStorage.getItem("name");

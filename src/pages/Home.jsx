@@ -61,7 +61,6 @@ export default function Home() {
     fetchDashboard();
   }, []);
 
-  // Hook para gerenciar edição/exclusão
   const {
     selectedService,
     formData,
@@ -192,7 +191,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Modais */}
       <EditServiceModal
         isOpen={isEditOpen}
         onClose={() => setIsEditOpen(false)}
@@ -211,7 +209,7 @@ export default function Home() {
         isSubmitting={isSubmitting}
       />
 
-      {/* Gráficos */}
+      {/* graficos */}
       <div className="bg-white p-4 rounded shadow-xl mb-10">
         <div className="flex flex-wrap justify-between items-center mb-2 px-2">
           <div className="text-gray-900 font-semibold mb-2 text-sm sm:text-base text-center">Valores da Semana</div>
@@ -256,7 +254,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Toast */}
       {toast.show && (
         <div
           className={`fixed bottom-5 left-5 right-5 sm:bottom-auto sm:left-auto sm:right-5 sm:top-5 max-w-xs sm:max-w-sm px-4 py-3 rounded shadow text-white ${
