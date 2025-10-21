@@ -86,5 +86,10 @@ Para mais detalhes, consulte o arquivo [LICENSE](./LICENSE).
 
 ---
 
+### 📢 Publicação no LinkedIn
+[🔗 Ver post no LinkedIn]()
+
+---
+
 <div align="center">💻 Feito por Américo Rodrigues</div>
 
