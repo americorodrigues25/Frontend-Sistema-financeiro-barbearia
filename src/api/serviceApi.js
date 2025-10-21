@@ -63,7 +63,7 @@ export const getServiceById = async (id) => {
   }
 };
 
-
+// filtra os serviços por tipo e data
 export const getFilteredServices = async (filters) => {
   const params = {};
 
@@ -92,6 +92,7 @@ export const getFilteredServices = async (filters) => {
   }
 };
 
+// pega total do dia
 export const getTotalDay = async () => {
   try {
     const res = await axios.get(`${API_URL}/services/total/day`, {
@@ -104,6 +105,7 @@ export const getTotalDay = async () => {
   }
 };
 
+// pega total do mês
 export const getTotalMonth = async () => {
   try {
     const res = await axios.get(`${API_URL}/services/total/month`, {
@@ -116,6 +118,7 @@ export const getTotalMonth = async () => {
   }
 };
 
+// pega serviços da semana
 export const getWeek = async () => {
   try {
     const res = await axios.get(`${API_URL}/services/week`, {
@@ -128,6 +131,7 @@ export const getWeek = async () => {
   }
 };
 
+// pega últimos serviços
 export const getLast = async () => {
   try {
     const res = await axios.get(`${API_URL}/services/last`, {

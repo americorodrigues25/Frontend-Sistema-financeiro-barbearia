@@ -5,7 +5,7 @@ export default function DeleteServiceModal({
   onClose,
   service,
   onConfirm,
-  isSubmitting, // <--- nova prop
+  isSubmitting,
 }) {
   if (!isOpen) return null;
 

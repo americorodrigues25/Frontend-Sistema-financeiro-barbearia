@@ -10,10 +10,10 @@ import { FaSearch } from "react-icons/fa";
 import { AuthContext } from "../context/AuthContext";
 
 export default function Nav() {
-  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
   const { logout, isLoggedIn } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -66,42 +66,38 @@ export default function Nav() {
             BARBEARIA DO CABEÇA
           </h2>
           <nav className="flex flex-col gap-3">
-            <div
+            <Link
+              to="/home"
               onClick={() => setMenuOpen(false)}
-              className="flex items-center pl-2 border-l-4 border-transparent hover:border-amber-500 hover:text-amber-500 transition-all duration-150 ease-in-out shadow-lg py-3"
+              className="flex items-center pl-2 border-l-4 border-transparent hover:border-amber-500 hover:text-amber-500 transition-all duration-150 ease-in-out shadow-lg py-3 w-full"
             >
               <MdHome className="inline mr-3 text-lg" />
-              <Link to="/home" className="text-base">
-                Home
-              </Link>
-            </div>
-            <div
+              <span className="text-base">Home</span>
+            </Link>
+            <Link
+              to="/novo-servico"
               onClick={() => setMenuOpen(false)}
-              className="flex items-center pl-2 border-l-4 border-transparent hover:border-amber-500 hover:text-amber-500 transition-all duration-150 ease-in-out shadow-lg py-3"
+              className="flex items-center pl-2 border-l-4 border-transparent hover:border-amber-500 hover:text-amber-500 transition-all duration-150 ease-in-out shadow-lg py-3 w-full"
             >
               <IoDuplicate className="inline mr-3" />
-              <Link to="/novo-servico" className="text-base">
-                Novo Serviço
-              </Link>
-            </div>
-            <div
+              <span className="text-base">Novo Serviço</span>
+            </Link>
+            <Link
+              to="/busca"
               onClick={() => setMenuOpen(false)}
-              className="flex items-center pl-2 border-l-4 border-transparent hover:border-amber-500 hover:text-amber-500 transition-all duration-150 ease-in-out shadow-lg py-3"
+              className="flex items-center pl-2 border-l-4 border-transparent hover:border-amber-500 hover:text-amber-500 transition-all duration-150 ease-in-out shadow-lg py-3 w-full"
             >
               <FaSearch className="inline mr-3" />
-              <Link to="/busca" className="text-base">
-                Busca Avançada
-              </Link>
-            </div>
-            <div
+              <span className="text-base">Busca Avançada</span>
+            </Link>
+            <Link
+              to="/configuracoes"
               onClick={() => setMenuOpen(false)}
-              className="flex items-center pl-2 border-l-4 border-transparent hover:border-amber-500 hover:text-amber-500 transition-all duration-150 ease-in-out shadow-lg py-3"
+              className="flex items-center pl-2 border-l-4 border-transparent hover:border-amber-500 hover:text-amber-500 transition-all duration-150 ease-in-out shadow-lg py-3 w-full"
             >
               <MdSettings className="inline mr-3" />
-              <Link to="/configuracoes" className="text-base">
-                Configurações
-              </Link>
-            </div>
+              <span className="text-base">Configurações</span>
+            </Link>
           </nav>
         </div>
 

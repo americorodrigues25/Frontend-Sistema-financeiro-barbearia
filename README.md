@@ -1,70 +1,95 @@
-# Getting Started with Create React App
+# 💈 Sistema de Barbearia (Front-end)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-0F172A?style=for-the-badge&logo=tailwindcss&logoColor=38B2AC)](https://tailwindcss.com/)
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=000)](https://developer.mozilla.org/docs/Web/JavaScript)
+[![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](./LICENSE)
 
-## Available Scripts
+### 📸 Fotos do sistema
 
-In the project directory, you can run:
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### 📘 Sobre o projeto
+<p>Este repositório contém o front-end do sistema da Barbearia que fiz para meu cliente, desenvolvido para oferecer uma interface intuitiva e moderna onde o barbeiro pode gerenciar seus serviços diários e mensais.</p>
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+🔗 Veja também: <a href="https://github.com/americorodrigues25/Backend-Sistema-financeiro-barbearia">Repositório do Back-end</a>
 
-### `npm test`
+--- 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 🌐 [**Clique aqui para testar o sistema**](https://sistema-barbearia-cabeca.vercel.app/)
+* Usuário: usuarioteste
+* Senha: 123456
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 🛠️ Tecnologias utilizadas
+* [ReactJS](https://react.dev/)
+* [React Router](https://reactrouter.com/)
+* [React Icons](https://react-icons.github.io/react-icons/)
+* [Tailwind](https://tailwindcss.com/)
+* [JSPDF](https://www.npmjs.com/package/jspdf-autotable)
+* [Recharts](https://recharts.github.io/en-US)
+* [Axios](https://axios-http.com/ptbr/docs/intro)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### ⚙️ Funcionalidades principais
+* Dashboard com resumo diário e mensal;
+* Cadastro e edição de serviços;
+* Filtros por data e tipo de serviço;
+* Gráficos interativos de serviços;
+* Login seguro com JWT;
+* Responsividade total (desktop, tablet e mobile);
+* Integração direta com o back-end da barbearia
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+🚀 Como rodar o projeto:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+``` bash
+# clone o repositório:
+$ git clone https://github.com/americorodrigues25/Frontend-Sistema-financeiro-barbearia.git
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+``` bash
+# Entre na pasta do repositório:
+$ cd Frontend-Sistema-financeiro-barbearia
+```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+``` bash
+# Instale as dependências:
+$ npm install
+```
 
-## Learn More
+* Configure o arquivo .env
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+``` bash
+# Crie um arquivo .env na raiz do projeto e adicione as variáveis:
+$ REACT_APP_API_URL=http://localhost:5000
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+``` bash
+# Execute o projeto
+$ npm start
+```
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### 🧾 Licença
+Este projeto está licenciado sob a **MIT License**.   
 
-### Analyzing the Bundle Size
+Você pode **usar, modificar e adaptar este sistema** livremente para outros clientes ou barbearias, desde que **mantenha os devidos créditos ao autor original**.  
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Para mais detalhes, consulte o arquivo [LICENSE](./LICENSE).
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### 📢 Publicação no LinkedIn
+[🔗 Ver post no LinkedIn]()
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+<div align="center">💻 Feito por Américo Rodrigues</div>
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

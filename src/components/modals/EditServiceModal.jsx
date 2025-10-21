@@ -7,7 +7,7 @@ export default function EditServiceModal({
   formData,
   setFormData,
   onSubmit,
-  isSubmitting, // nova prop
+  isSubmitting,
 }) {
   if (!isOpen) return null;
 

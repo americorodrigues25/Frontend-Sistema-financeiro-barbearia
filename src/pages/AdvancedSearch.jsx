@@ -46,6 +46,9 @@ const AdvancedSearch = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
 
+  const [hasSearched, setHasSearched] = useState(false);
+
+
   const handleChange = (e) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
   };
@@ -57,6 +60,7 @@ const AdvancedSearch = () => {
   const handleSearch = async (e) => {
     if (e) e.preventDefault();
     setLoading(true);
+    setHasSearched(true);
 
     try {
       const payload = {
@@ -179,8 +183,8 @@ const AdvancedSearch = () => {
               periodo={
                 filters.dataInicio && filters.dataFim
                   ? `Período: ${filters.dataInicio.toLocaleDateString(
-                      "pt-BR"
-                    )} até ${filters.dataFim.toLocaleDateString("pt-BR")}`
+                    "pt-BR"
+                  )} até ${filters.dataFim.toLocaleDateString("pt-BR")}`
                   : "Período: Todos"
               }
             />
@@ -235,11 +239,10 @@ const AdvancedSearch = () => {
                 <button
                   key={i}
                   onClick={() => handlePageChange(i + 1)}
-                  className={`px-3 py-1 rounded ${
-                    currentPage === i + 1
+                  className={`px-3 py-1 rounded ${currentPage === i + 1
                       ? "bg-orange-500 text-white"
                       : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                  }`}
+                    }`}
                 >
                   {i + 1}
                 </button>
@@ -248,7 +251,7 @@ const AdvancedSearch = () => {
           </div>
         )}
 
-        {!results.length && !loading && (
+        {hasSearched && !results.length && !loading && (
           <p className="text-center text-gray-500 mt-8">
             Nenhum serviço encontrado.
           </p>
@@ -275,9 +278,8 @@ const AdvancedSearch = () => {
 
       {toast.show && (
         <div
-          className={`fixed top-5 right-5 px-4 py-2 rounded shadow text-white ${
-            toast.type === "success" ? "bg-green-500" : "bg-red-500"
-          }`}
+          className={`fixed top-5 right-5 px-4 py-2 rounded shadow text-white ${toast.type === "success" ? "bg-green-500" : "bg-red-500"
+            }`}
         >
           {toast.message}
         </div>
