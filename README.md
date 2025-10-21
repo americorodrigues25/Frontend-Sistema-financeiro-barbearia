@@ -14,9 +14,13 @@
 ### 📘 Sobre o projeto
 <p>Este repositório contém o front-end do sistema da Barbearia que fiz para meu cliente, desenvolvido para oferecer uma interface intuitiva e moderna onde o barbeiro pode gerenciar seus serviços diários e mensais.</p>
 
----
-
 🔗 Veja também: <a href="https://github.com/americorodrigues25/Backend-Sistema-financeiro-barbearia">Repositório do Back-end</a>
+
+--- 
+
+### 🌐 [**Clique aqui para testar o sistema**](https://sistema-barbearia-cabeca.vercel.app/)
+* Usuário: usuarioteste
+* Senha: 123456
 
 ---
 
