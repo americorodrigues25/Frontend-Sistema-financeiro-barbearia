@@ -80,9 +80,7 @@ $ npm start
 ### 🧾 Licença
 Este projeto está licenciado sob a **MIT License**.   
 
-Você pode **usar, modificar e adaptar este sistema** livremente para outros clientes ou barbearias, desde que **mantenha os devidos créditos ao autor original**.  
-
-Para mais detalhes, consulte o arquivo [LICENSE](./LICENSE).
+[LICENSE](./LICENSE)
 
 ---
 
