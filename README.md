@@ -91,7 +91,7 @@ Este projeto está licenciado sob a **MIT License**.
 ---
 
 ### 📢 Publicação no LinkedIn
-[🔗 Ver post no LinkedIn]()
+[🔗 Ver post no LinkedIn](https://www.linkedin.com/feed/update/urn:li:activity:7387509887292964864/)
 
 ---
 
