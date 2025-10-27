@@ -5,24 +5,27 @@ import "jspdf-autotable";
 
 const ExportPDF = ({ data, filename = "relatorio.pdf", periodo }) => {
   const handleExport = () => {
-    const doc = new jsPDF();
+    const doc = new jsPDF({
+      orientation: "portrait",
+      unit: "mm",
+      format: "a4",
+    });
 
-    // header
-    doc.setFontSize(20);
+    // Título centralizado
     doc.setFont("helvetica", "bold");
-    doc.text("Relatório de Serviços", 14, 20);
+    doc.setFontSize(18);
+    doc.text("Relatório de Serviços", 105, 20, { align: "center" });
 
-    // datas do filtro
-    doc.setFontSize(12);
+    // Subtítulo com período
     doc.setFont("helvetica", "normal");
-    if (periodo) {
-      doc.text(periodo, 200, 20, { align: "right" });
-    }
+    doc.setFontSize(12);
+    doc.text(periodo || "Período: Todos", 105, 28, { align: "center" });
 
-    // linha horizontal
-    doc.setLineWidth(0.5);
-    doc.line(14, 25, 196, 25);
+    // Linha divisória
+    doc.setDrawColor(200);
+    doc.line(14, 32, 196, 32);
 
+    // Tabela de dados
     const tableColumn = ["Tipo", "Valor (R$)", "Data"];
     const tableRows = data.map((item) => [
       item.tipo,
@@ -33,17 +36,39 @@ const ExportPDF = ({ data, filename = "relatorio.pdf", periodo }) => {
     const total = data.reduce((acc, item) => acc + Number(item.valor), 0);
 
     doc.autoTable({
+      startY: 38,
       head: [tableColumn],
       body: tableRows,
-      startY: 30,
       theme: "striped",
-      headStyles: { fillColor: [17, 24, 39], textColor: [255, 255, 255] },
+      headStyles: {
+        fillColor: [33, 37, 41],
+        textColor: [255, 255, 255],
+        fontStyle: "bold",
+      },
+      bodyStyles: { fontSize: 10 },
+      alternateRowStyles: { fillColor: [245, 245, 245] },
+      styles: { cellPadding: 4 },
+      margin: { left: 14, right: 14 },
     });
 
     const finalY = doc.lastAutoTable.finalY + 10;
-    doc.setFontSize(12);
+
+    // Resumo no final
+    const quantidade = data.length;
     doc.setFont("helvetica", "bold");
-    doc.text(`Total: R$ ${total.toFixed(2)}`, 14, finalY);
+    doc.setFontSize(12);
+    doc.text(`Quantidade de Serviços: ${quantidade}`, 14, finalY);
+    doc.text(`Valor Total: R$ ${total.toFixed(2)}`, 14, finalY + 7);
+
+    // Rodapé
+    doc.setFontSize(10);
+    doc.setFont("helvetica", "italic");
+    doc.text(
+      "Gerado automaticamente pelo sistema - © " + new Date().getFullYear(),
+      105,
+      290,
+      { align: "center" }
+    );
 
     doc.save(filename);
   };
@@ -52,10 +77,10 @@ const ExportPDF = ({ data, filename = "relatorio.pdf", periodo }) => {
     <button
       onClick={handleExport}
       disabled={!data.length}
-      className="bg-red-500 hover:bg-red-600 text-white font-semibold px-6 py-2 rounded-lg shadow-md transition flex justify-center items-center gap-2 disabled:opacity-60"
+      className="bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold px-6 py-2 rounded-xl shadow-md transition-all duration-200 flex justify-center items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
     >
-      <FaFilePdf />
-      Exportar PDF
+      <FaFilePdf className="text-lg" />
+      <span>Exportar PDF</span>
     </button>
   );
 };
