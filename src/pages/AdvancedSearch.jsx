@@ -195,25 +195,43 @@ const AdvancedSearch = () => {
 
         {results.length > 0 && (
           <div className="mt-8">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between bg-gray-100 border border-gray-300 rounded-lg p-4 mb-4">
-              <p className="text-gray-700 text-base sm:text-lg">
-                <strong>Período:</strong>{" "}
-                {filters.dataInicio && filters.dataFim
-                  ? `${filters.dataInicio.toLocaleDateString(
-                      "pt-BR"
-                    )} até ${filters.dataFim.toLocaleDateString("pt-BR")}`
-                  : "Todos"}
-              </p>
-              <p className="text-gray-700 text-base sm:text-lg">
-                <strong>Quantidade de Serviços:</strong> {totalServicos}
-              </p>
-              <p className="text-gray-700 text-base sm:text-lg">
-                <strong>Valor Total:</strong> R${" "}
-                {valorTotal.toLocaleString("pt-BR", {
-                  minimumFractionDigits: 2,
-                })}
-              </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-white border border-gray-200 rounded-2xl p-5 mb-6 shadow-sm">
+              <div className="flex flex-col items-center justify-center text-center">
+                <span className="text-sm text-gray-500 uppercase tracking-wide">
+                  Período
+                </span>
+                <span className="text-gray-800 font-semibold text-lg">
+                  {filters.dataInicio && filters.dataFim
+                    ? `${filters.dataInicio.toLocaleDateString(
+                        "pt-BR"
+                      )} — ${filters.dataFim.toLocaleDateString("pt-BR")}`
+                    : "Todos"}
+                </span>
+              </div>
+
+              <div className="flex flex-col items-center justify-center text-center">
+                <span className="text-sm text-gray-500 uppercase tracking-wide">
+                  Serviços
+                </span>
+                <span className="text-gray-800 font-semibold text-lg">
+                  {totalServicos}
+                </span>
+              </div>
+
+              <div className="flex flex-col items-center justify-center text-center">
+                <span className="text-sm text-gray-500 uppercase tracking-wide">
+                  Valor Total
+                </span>
+                <span className="text-gray-800 font-semibold text-lg">
+                  R${" "}
+                  {valorTotal.toLocaleString("pt-BR", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  })}
+                </span>
+              </div>
             </div>
+
             <div className="overflow-x-auto">
               <table className="min-w-full border border-gray-300 rounded-lg">
                 <thead>
