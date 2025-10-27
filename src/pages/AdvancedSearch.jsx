@@ -48,7 +48,6 @@ const AdvancedSearch = () => {
 
   const [hasSearched, setHasSearched] = useState(false);
 
-
   const handleChange = (e) => {
     setFilters({ ...filters, [e.target.name]: e.target.value });
   };
@@ -104,6 +103,9 @@ const AdvancedSearch = () => {
     setIsEditOpen,
     setIsDeleteOpen,
   } = useServiceManager(handleSearch, showToast);
+
+  const totalServicos = results.length;
+  const valorTotal = results.reduce((acc, item) => acc + Number(item.valor), 0);
 
   return (
     <div className="h-full flex flex-col items-center justify-start bg-gray-100 min-h-screen px-4 sm:px-6 md:px-8 py-6">
@@ -183,8 +185,8 @@ const AdvancedSearch = () => {
               periodo={
                 filters.dataInicio && filters.dataFim
                   ? `Período: ${filters.dataInicio.toLocaleDateString(
-                    "pt-BR"
-                  )} até ${filters.dataFim.toLocaleDateString("pt-BR")}`
+                      "pt-BR"
+                    )} até ${filters.dataFim.toLocaleDateString("pt-BR")}`
                   : "Período: Todos"
               }
             />
@@ -192,61 +194,83 @@ const AdvancedSearch = () => {
         </form>
 
         {results.length > 0 && (
-          <div className="mt-8 overflow-x-auto">
-            <table className="min-w-full border border-gray-300 rounded-lg">
-              <thead>
-                <tr className="bg-gray-200 text-gray-700">
-                  <th className="px-4 py-2 text-left">Tipo</th>
-                  <th className="px-4 py-2 text-left">Valor (R$)</th>
-                  <th className="px-4 py-2 text-left">Data</th>
-                  <th className="px-4 py-2 text-center">Ações</th>
-                </tr>
-              </thead>
-              <tbody>
-                {currentItems.map((item) => (
-                  <tr key={item._id} className="border-t hover:bg-gray-50">
-                    <td className="px-4 py-2">{item.tipo}</td>
-                    <td className="px-4 py-2">
-                      R${" "}
-                      {Number(item.valor).toLocaleString("pt-BR", {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })}
-                    </td>
-                    <td className="px-4 py-2">
-                      {new Date(item.data).toLocaleDateString("pt-BR")}
-                    </td>
-                    <td className="px-4 py-2 text-center">
-                      <div className="flex justify-center gap-3">
-                        <FaEdit
-                          className="text-gray-900 hover:text-gray-950 cursor-pointer"
-                          onClick={() => openEditModal(item)}
-                        />
-                        <FaTrash
-                          className="text-gray-900 hover:text-red-600 cursor-pointer"
-                          onClick={() => openDeleteModal(item)}
-                        />
-                      </div>
-                    </td>
+          <div className="mt-8">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between bg-gray-100 border border-gray-300 rounded-lg p-4 mb-4">
+              <p className="text-gray-700 text-base sm:text-lg">
+                <strong>Período:</strong>{" "}
+                {filters.dataInicio && filters.dataFim
+                  ? `${filters.dataInicio.toLocaleDateString(
+                      "pt-BR"
+                    )} até ${filters.dataFim.toLocaleDateString("pt-BR")}`
+                  : "Todos"}
+              </p>
+              <p className="text-gray-700 text-base sm:text-lg">
+                <strong>Quantidade de Serviços:</strong> {totalServicos}
+              </p>
+              <p className="text-gray-700 text-base sm:text-lg">
+                <strong>Valor Total:</strong> R${" "}
+                {valorTotal.toLocaleString("pt-BR", {
+                  minimumFractionDigits: 2,
+                })}
+              </p>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="min-w-full border border-gray-300 rounded-lg">
+                <thead>
+                  <tr className="bg-gray-200 text-gray-700">
+                    <th className="px-4 py-2 text-left">Tipo</th>
+                    <th className="px-4 py-2 text-left">Valor (R$)</th>
+                    <th className="px-4 py-2 text-left">Data</th>
+                    <th className="px-4 py-2 text-center">Ações</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {currentItems.map((item) => (
+                    <tr key={item._id} className="border-t hover:bg-gray-50">
+                      <td className="px-4 py-2">{item.tipo}</td>
+                      <td className="px-4 py-2">
+                        R${" "}
+                        {Number(item.valor).toLocaleString("pt-BR", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })}
+                      </td>
+                      <td className="px-4 py-2">
+                        {new Date(item.data).toLocaleDateString("pt-BR")}
+                      </td>
+                      <td className="px-4 py-2 text-center">
+                        <div className="flex justify-center gap-3">
+                          <FaEdit
+                            className="text-gray-900 hover:text-gray-950 cursor-pointer"
+                            onClick={() => openEditModal(item)}
+                          />
+                          <FaTrash
+                            className="text-gray-900 hover:text-red-600 cursor-pointer"
+                            onClick={() => openDeleteModal(item)}
+                          />
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
 
-            {/* paginação */}
-            <div className="flex justify-center mt-4 gap-2">
-              {Array.from({ length: totalPages }, (_, i) => (
-                <button
-                  key={i}
-                  onClick={() => handlePageChange(i + 1)}
-                  className={`px-3 py-1 rounded ${currentPage === i + 1
-                      ? "bg-orange-500 text-white"
-                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              {/* paginação */}
+              <div className="flex justify-center mt-4 gap-2">
+                {Array.from({ length: totalPages }, (_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => handlePageChange(i + 1)}
+                    className={`px-3 py-1 rounded ${
+                      currentPage === i + 1
+                        ? "bg-orange-500 text-white"
+                        : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                     }`}
-                >
-                  {i + 1}
-                </button>
-              ))}
+                  >
+                    {i + 1}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
         )}
@@ -278,8 +302,9 @@ const AdvancedSearch = () => {
 
       {toast.show && (
         <div
-          className={`fixed top-5 right-5 px-4 py-2 rounded shadow text-white ${toast.type === "success" ? "bg-green-500" : "bg-red-500"
-            }`}
+          className={`fixed top-5 right-5 px-4 py-2 rounded shadow text-white ${
+            toast.type === "success" ? "bg-green-500" : "bg-red-500"
+          }`}
         >
           {toast.message}
         </div>
