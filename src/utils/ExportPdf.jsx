@@ -57,7 +57,9 @@ const ExportPDF = ({ data, filename = "relatorio.pdf", periodo }) => {
     doc.setFont("helvetica", "bold");
     doc.setFontSize(12);
     doc.text(`Quantidade de Serviços: ${quantidade}`, 14, finalY);
-    doc.text(`Valor Total: R$ ${total.toFixed(2)}`, 14, finalY + 8);
+    doc.text(`Valor Total: R$ ${total.toFixed(2)}`, 196, finalY, {
+      align: "right",
+    });
 
     doc.setFontSize(10);
     doc.setFont("helvetica", "italic");
