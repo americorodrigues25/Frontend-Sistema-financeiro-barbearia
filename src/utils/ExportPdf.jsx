@@ -11,21 +11,21 @@ const ExportPDF = ({ data, filename = "relatorio.pdf", periodo }) => {
       format: "a4",
     });
 
-    // Título centralizado
+    // titulo do relatório
     doc.setFont("helvetica", "bold");
     doc.setFontSize(18);
     doc.text("Relatório de Serviços", 105, 20, { align: "center" });
 
-    // Subtítulo com período
+    // subtitulo com o período
     doc.setFont("helvetica", "normal");
     doc.setFontSize(12);
     doc.text(periodo || "Período: Todos", 105, 28, { align: "center" });
 
-    // Linha divisória
+    // linha
     doc.setDrawColor(200);
     doc.line(14, 32, 196, 32);
 
-    // Tabela de dados
+    // tabela com os dados
     const tableColumn = ["Tipo", "Valor (R$)", "Data"];
     const tableRows = data.map((item) => [
       item.tipo,
@@ -53,14 +53,12 @@ const ExportPDF = ({ data, filename = "relatorio.pdf", periodo }) => {
 
     const finalY = doc.lastAutoTable.finalY + 10;
 
-    // Resumo no final
     const quantidade = data.length;
     doc.setFont("helvetica", "bold");
     doc.setFontSize(12);
     doc.text(`Quantidade de Serviços: ${quantidade}`, 14, finalY);
     doc.text(`Valor Total: R$ ${total.toFixed(2)}`, 14, finalY + 7);
 
-    // Rodapé
     doc.setFontSize(10);
     doc.setFont("helvetica", "italic");
     doc.text(
