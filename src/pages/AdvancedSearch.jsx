@@ -200,7 +200,7 @@ const AdvancedSearch = () => {
                 <span className="text-sm text-gray-500 uppercase tracking-wide">
                   Período
                 </span>
-                <span className="text-gray-800 font-semibold text-lg">
+                <span className="text-gray-800 font-semibold text-base">
                   {filters.dataInicio && filters.dataFim
                     ? `${filters.dataInicio.toLocaleDateString(
                         "pt-BR"
@@ -213,7 +213,7 @@ const AdvancedSearch = () => {
                 <span className="text-sm text-gray-500 uppercase tracking-wide">
                   Serviços
                 </span>
-                <span className="text-gray-800 font-semibold text-lg">
+                <span className="text-gray-800 font-semibold text-base">
                   {totalServicos}
                 </span>
               </div>
@@ -222,7 +222,7 @@ const AdvancedSearch = () => {
                 <span className="text-sm text-gray-500 uppercase tracking-wide">
                   Valor Total
                 </span>
-                <span className="text-gray-800 font-semibold text-lg">
+                <span className="text-gray-800 font-semibold text-base">
                   R${" "}
                   {valorTotal.toLocaleString("pt-BR", {
                     minimumFractionDigits: 2,
